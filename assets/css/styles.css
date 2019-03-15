@@ -1,0 +1,139 @@
+* {
+    margin: 0;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+.banner {
+    border-bottom: 10px solid midnightblue;
+    flex: 1;
+    padding: 10px;
+}
+
+.banner img {
+    width: 100%;
+    height: 160px;
+}
+
+.bg-gray {
+    background-color: #ddd;
+}
+
+body {
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+}
+
+.border {
+    border: 1px solid red;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.content-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.flex1{
+    flex: 1;
+}
+
+.header {
+    display: flex;
+    flex:1;
+    min-height: 170px;
+}
+
+.justify-flex-end {
+    justify-content: flex-end;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.login-input {
+    font-size: 14px;
+    padding: 10px;
+    width: 100%;
+}
+
+.login-text {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.login-button {
+    background-color: darkblue;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 1.1em;
+    padding: 10px 15px 10px 15px;
+}
+
+.login-container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 15px;
+}
+
+.login-container h3 {
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.main-container {
+    background-color: #eee;
+    border-radius: 0px 0px 8px 8px;
+    margin-bottom: 10px;
+    padding-bottom: 20px;
+    width: 1000px;
+}
+
+.mt5 {
+    margin-top: 5px;
+}
+
+.mt10 {
+    margin-top: 10px;
+}
+
+.mt15 {
+    margin-top: 15px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.side-content-container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 15px;
+}
+
+.side-content-text-container {
+    border-radius: 8px;
+    flex: 1;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.wrap {
+    flex-wrap: wrap;
+}
+
