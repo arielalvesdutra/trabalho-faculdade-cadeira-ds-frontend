@@ -54,6 +54,10 @@ body {
     min-height: 170px;
 }
 
+.justify-center{
+    justify-content: center;
+}
+
 .justify-flex-end {
     justify-content: flex-end;
 }
@@ -87,6 +91,7 @@ body {
     flex: 1;
     flex-direction: column;
     padding: 15px;
+    min-width: 300px;
 }
 
 .login-container h3 {
@@ -114,9 +119,57 @@ body {
     margin-top: 15px;
 }
 
+.mt25 {
+    margin-top: 25px;
+}
+
+
 .row {
     display: flex;
     flex-direction: row;
+}
+
+.select-profile-button {
+    background-color: darkblue;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 1.1em;
+    padding: 10px 15px 10px 15px;
+}
+
+.select-profile-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin: 15px 20px 0px 20px;
+}
+
+.select-profile-select-options select {
+    background-color: white;
+    padding: 5px 15px 5px 15px;
+}
+
+.select-profile-select-options {
+    background-color: #ddd;
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.select-profile-text {
+    text-align: left;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.select-profile-user-title {
+    background-color: midnightblue;
+    border-radius: 8px;
+    color: white;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 15px;
 }
 
 .side-content-container {
