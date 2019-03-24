@@ -7,6 +7,86 @@ a {
     text-decoration: none;
 }
 
+.admin-button {
+    background-color: darkblue;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 1.1em;
+    padding: 10px 15px 10px 15px;
+    margin-right: 7px;
+}
+
+.admin-container {
+    display: flex;
+    flex-direction: column;
+    flex: 10;
+    margin: 15px 20px 0px 20px;
+}
+
+.admin-content-container {
+    background-color: #ddd;
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.admin-content-container a {
+    color: #333;
+}
+
+.admin-input {
+    font-size: 14px;
+    padding: 10px;
+    margin-right: 7px;
+    flex:1;
+    background-color: white;
+}
+
+.admin-nav {
+    flex: 1;
+    margin: 25px 0px 0px 0px;
+    min-width: 100px;
+    padding: 10px 0px 10px 0px;
+    flex-wrap: wrap;
+    
+}
+
+.admin-nav a {
+    background-color: midnightblue;
+    color: white;
+    font-weight: bold;
+    padding: 15px 20px;
+    width: 100%;
+}
+
+.admin-nav a:hover {
+    color: slategrey;
+    background-color: white;
+}
+
+.admin-nav li {
+    display: inline-block;
+    display: flex;
+}
+
+.admin-nav ul {
+    display: inline-block;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.admin-profile-user-title {
+    background-color: midnightblue;
+    border-radius: 8px;
+    color: white;
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 15px;
+}
+
 .banner {
     border-bottom: 10px solid midnightblue;
     flex: 1;
@@ -22,6 +102,14 @@ a {
     background-color: #ddd;
 }
 
+.bg-gray-soft {
+    background-color: #eee;
+}
+
+.bg-white {
+    background-color: white;
+}
+
 body {
     background-color: #fff;
     display: flex;
@@ -32,11 +120,14 @@ body {
     border: 1px solid red;
 }
 
+button {
+    cursor: pointer;
+}
+
 .column {
     display: flex;
     flex-direction: column;
 }
-
 
 .content-container {
     display: flex;
@@ -48,10 +139,26 @@ body {
     flex: 1;
 }
 
+.flex2{
+    flex: 2;
+}
+
 .header {
     display: flex;
     flex:1;
     min-height: 170px;
+}
+
+i {
+    margin-right: 10px;
+}
+
+.justify-around {
+    justify-content: space-around;
+}
+
+.justify-between {
+    justify-content: space-between;
 }
 
 .justify-center{
@@ -60,10 +167,6 @@ body {
 
 .justify-flex-end {
     justify-content: flex-end;
-}
-
-.justify-between {
-    justify-content: space-between;
 }
 
 .login-input {
@@ -105,6 +208,14 @@ body {
     margin-bottom: 10px;
     padding-bottom: 20px;
     width: 1000px;
+}
+
+.ml5 {
+    margin-left: 5px;
+}
+
+.ml15 {
+    margin-left: 15px;
 }
 
 .mt5 {
@@ -186,7 +297,34 @@ body {
     padding: 10px;
 }
 
+.status-text {
+    font-size: 1.2em;
+}
+
+.table-default {
+    border: 1px solid #bbb;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table-default table, th, td {
+    border: 1px solid #bbb;
+    padding: 7px 5px;
+}
+
 .wrap {
     flex-wrap: wrap;
 }
 
+@media(max-width: 650px) {
+    .admin-nav ul{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .admin-nav li{
+        flex: 1;
+    }
+}
