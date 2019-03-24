@@ -34,6 +34,12 @@ a {
     color: #333;
 }
 
+.admin-dashboard-container {
+    background-color: #ddd;
+    border-radius: 8px;
+    padding: 15px;
+}
+
 .admin-input {
     font-size: 14px;
     padding: 10px;
@@ -85,6 +91,10 @@ a {
     flex-direction: row;
     justify-content: space-between;
     padding: 15px;
+}
+
+.align-items-center {
+    align-items: center;
 }
 
 .banner {
