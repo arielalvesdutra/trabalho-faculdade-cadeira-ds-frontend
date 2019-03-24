@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SAH - Sistema de Ajuste de Horas</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="main-container wrap">
+
+        <div class="header">
+            <div class="banner">
+                <img src="assets/imgs/banner.png" alt="Banner">
+            </div>
+        </div>
+        <div class="content-container ">
+            <!-- NAV -->
+            <div class="admin-nav">
+
+                <ul>
+                    <li>
+                        <a href="inserir-horas.html">Inserir</a>
+                    </li>
+
+                    <li>
+                        <a href="editar-horas.html">Editar</a>
+                    </li>
+                    <li>
+                        <a href="consultar-horas.html">Visualizar</a>
+                    </li>
+                </ul>
+
+            </div>
+            <!-- FIM NAV -->
+            <div class="admin-container">
+                <!-- NOME E PERFIL USUÁRIO -->
+                <div class="admin-profile-user-title">
+                    <h3 class="">
+                        Usuário: Fulano de tal
+                    </h3>
+                    <h3 class="">
+                        Perfil: Trabalhador
+                    </h3>
+                </div>
+                <!-- FIM NOME E PERFIL USUÁRIO -->
+               <!-- CONSULTA -->
+               <div class="row mt25 ml15">
+                    <h3>Insere Hora</h3>
+                </div>
+                <div class="admin-content-container mt10">
+                    <div class="row mt10 wrap justify-around">
+                        <div class="column flex1">
+                            <div class="row mt5">
+                                Data Inicio
+                            </div>
+                            <div class="row mt10">
+                                <input type="text" class="admin-input" placeholder="DD/MM/AAAA">
+                            </div>
+                        </div>
+                        <div class="column flex1">
+                            <div class="row mt5">
+                                Data Saída
+                            </div>
+                            <div class="row mt10">
+                                <input type="text" class="admin-input" placeholder="DD/MM/AAAA">
+                            </div>
+                        </div>
+
+                        <div class="column flex2">
+                            <div class="row mt5">
+                                Justificativa
+                            </div>
+
+                            <div class="row mt10">
+                                <select type="text" class="admin-input">
+                                    <option>Prod. Conteúdo </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt25 justify-flex-end">
+                        <button class="admin-button">Consulta</button>
+                    </div>
+                </div>
+                <!-- CONSULTA -->
+                <!-- LISTA DE HORAS -->
+                <div class="row mt15 ml15">
+                    <h3>Lista de Horas</h3>
+                </div>
+                <div class="admin-content-container mt10">
+                    <div class="row mt10 justify-center flex1">
+                        <table class="table-default bg-white" style="overflow:auto;">
+                            <thead class="bg-gray-soft">
+                                <tr>
+                                    <th>
+                                        Data
+                                    </th>
+                                    <th>
+                                        Hora Entrada
+                                    </th>
+                                    <th>
+                                        Hora Saída
+                                    </th>
+                                    <th>
+                                        Total Horas
+                                    </th>
+                                    <th>
+                                        Justificativa
+                                    </th>
+                                    <th>
+                                        Opções
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>10/10/2016</td>
+                                    <td>08:00</td>
+                                    <td>12:00</td>
+                                    <td>4</td>
+                                    <td>Versionamento</td>
+                                    <td>
+                                            <a href="" title="Editar">
+                                                <i class="far fa fa-edit"></i>
+                                            </a>
+                                            <a href="" title="Editar">
+                                                <i class="far fa fa-trash"></i>
+                                            </a>
+                                        </td>
+                                </tr>
+                                <tr>
+                                    <td>10/10/2016</td>
+                                    <td>08:00</td>
+                                    <td>12:00</td>
+                                    <td>4</td>
+                                    <td>Versionamento</td>
+                                    <td>
+                                        <a href="" title="Editar">
+                                            <i class="far fa fa-edit"></i>
+                                        </a>
+                                        <a href="" title="Editar">
+                                            <i class="far fa fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- FIM LISTA DE HORAS-->
+                <!-- BOTÃO ENVIAR PARA ANÁLISE -->
+                <div class="row mt25 justify-flex-end">
+                    <button class="admin-button">Voltar</button>
+                    <button class="admin-button">Enviar para Análise</button>
+                </div>
+                <!-- FIM BOTÃO ENVIAR PARA ANÁLISE -->
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
