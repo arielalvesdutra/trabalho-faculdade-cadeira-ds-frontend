@@ -32,7 +32,7 @@
                         Digite seu e-mail para acessar o Sistema de Ajuste de Horas
                     </h3>
                     <hr>
-                    <form id="loginForm" name="loginForm" action="selecionar-perfil.html">
+                    <form id="loginForm" name="loginForm" >
                         <div class="row mt15 login-text">
                             E-mail:
                         </div>
@@ -46,7 +46,7 @@
                             <input name="password" type="password" class="login-input" maxlength="100"
                                 placeholder="Digite a sua senha">
                         </div>
-                        <div id="login-fields-errors" class="login-fields-errors">
+                        <div id="login-fields-errors" class="fields-errors">
                         </div>
                         <div class="row mt10  justify-between wrap">
                             <div class="column wrap flex1">
@@ -89,45 +89,9 @@
     </div>
 
     <div id="json-div">
-    <!-- FIM MAIN-CONTAINER -->
+        <!-- FIM MAIN-CONTAINER -->
 
-    <script src="assets/js/login.js"></script>
-
-    <script>
-
-        document.loginForm.onsubmit = async event => {
-            event.preventDefault()
-
-            const form = event.target
-            const data = new FormData(form)
-
-            let email = data.get('email')
-            let password = data.get('password')      
-
-            try {
-                validadeSignInFields(email, password)
-
-                const httpMethod = {    
-                    method: 'POST',
-                    body: data,
-                    mode: 'cors'
-                }
-
-                const url = 'http://localhost:8000/signin'
-
-                fetch(url, httpMethod)
-                    .then(response => response.json())
-                    .then(json => {
-                        let jsonDiv = document.getElementById('json-div')
-                        jsonDiv.innerHTML = JSON.stringify(json)
-                    })
-
-
-            } catch(exception) {
-                // only catch
-            }
-        }
-    </script>
+        <script type="module" src="assets/js/login.js"></script>
 </body>
 
 </html>
