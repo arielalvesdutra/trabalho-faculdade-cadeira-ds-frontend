@@ -7,71 +7,127 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>SAH - Sistema de Ajuste de Horas</title>
     <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 </head>
 
 <body>
-    <div class="main-container">
-
+    <!-- MAIN-CONTAINER -->
+    <div class="main-container wrap">
+        <!-- HEADER -->
         <div class="header">
             <div class="banner">
                 <img src="assets/imgs/banner.png" alt="Banner">
             </div>
         </div>
+        <!-- FIM HEADER -->
+        <!-- CONTENT-CONTAINER -->
+        <div id="content-container" class="content-container ">
 
-        <div class="content-container">
-
-            <div class="login-container">
-                <h3>
-                    Digite seu e-mail para acessar o Sistema de Ajuste de Horas
-                </h3>
-                <hr>
-                <form action="selecionar-perfil.html">
-                    <div class="row mt15 login-text">
-                        E-mail:
-                    </div>
-                    <div class="row mt10">
-                        <input type="text" class="login-input">
-                    </div>
-                    <div class="row mt10 login-text" maxlength="100">
-                        Senha:
-                    </div>
-                    <div class="row mt10 ">
-                        <input type="text" class="login-input" maxlength="100">
-                    </div>
-                    <div class="row mt10  justify-between wrap">
-                        <div class="column wrap flex1">
-                            <div class="row">
-                                <a href="">Ainda não sou cadastrado!</a>
-                            </div>
-                            <div class="row mt5">
-                                <a href="">Esqueceu a senha?</a>
-                            </div>
+            <!-- LOGIN-CONTENT-CONTAINER -->
+            <div class="login-content-container">
+                <!-- LOGIN-CONTAINER -->
+                <div class="login-container">
+                    <h3>
+                        Digite seu e-mail para acessar o Sistema de Ajuste de Horas
+                    </h3>
+                    <hr>
+                    <form id="loginForm" name="loginForm" action="selecionar-perfil.html">
+                        <div class="row mt15 login-text">
+                            E-mail:
                         </div>
-                        <div class="column  flex1">
-                            <button class="login-button">Entrar</button>
+                        <div class="row mt10">
+                            <input name="email" type="text" class="login-input" placeholder="Digite o seu e-mail">
                         </div>
-                </form>
+                        <div class="row mt10 login-text" maxlength="100">
+                            Senha:
+                        </div>
+                        <div class="row mt10 ">
+                            <input name="password" type="password" class="login-input" maxlength="100"
+                                placeholder="Digite a sua senha">
+                        </div>
+                        <div id="login-fields-errors" class="login-fields-errors">
+                        </div>
+                        <div class="row mt10  justify-between wrap">
+                            <div class="column wrap flex1">
+                                <div class="row">
+                                    <a href="#signup">Ainda não sou cadastrado!</a>
+                                </div>
+                                <div class="row mt5">
+                                    <a href="#password-recovery">Esqueceu a senha?</a>
+                                </div>
+                            </div>
+                            <div class="column  flex1">
+                                <button class="login-button">Entrar</button>
+                            </div>
+                    </form>
+                </div>
+                <!-- FIM LOGIN-CONTAINER -->
             </div>
-        </div>
+            <!-- FIM LOGIN-CONTENT-CONTAINER -->
+            <!-- SIDE-CONTENT-CONTANER -->
+            <div class="side-content-container">
+                <div class="side-content-text-container bg-gray color-white">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+                    culpa qui officia deserunt mollit anim id est laborum.
+                </div>
+                <div class="side-content-text-container">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+                    culpa qui officia deserunt mollit anim id est laborum.
+                </div>
+            </div>
+            <!-- FIM SIDE-CONTENT-CONTANER -->
 
-        <div class="side-content-container">
-            <div class="side-content-text-container bg-gray">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                culpa qui officia deserunt mollit anim id est laborum.
-            </div>
-            <div class="side-content-text-container">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                culpa qui officia deserunt mollit anim id est laborum.
-            </div>
         </div>
+        <!-- FIM CONTENT-CONTAINER -->
     </div>
-    </div>
+
+    <div id="json-div">
+    <!-- FIM MAIN-CONTAINER -->
+
+    <script src="assets/js/login.js"></script>
+
+    <script>
+
+        document.loginForm.onsubmit = async event => {
+            event.preventDefault()
+
+            const form = event.target
+            const data = new FormData(form)
+
+            let email = data.get('email')
+            let password = data.get('password')      
+
+            try {
+                validadeSignInFields(email, password)
+
+                const httpMethod = {    
+                    method: 'POST',
+                    body: data,
+                    mode: 'cors'
+                }
+
+                const url = 'http://localhost:8000/signin'
+
+                fetch(url, httpMethod)
+                    .then(response => response.json())
+                    .then(json => {
+                        let jsonDiv = document.getElementById('json-div')
+                        jsonDiv.innerHTML = JSON.stringify(json)
+                    })
+
+
+            } catch(exception) {
+                // only catch
+            }
+        }
+    </script>
 </body>
 
 </html>
