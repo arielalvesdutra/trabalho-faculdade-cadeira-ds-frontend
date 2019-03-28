@@ -48,7 +48,7 @@ const selectProfile = () => {
     
             window.location.href = 'dashboard.html'
         } catch(exception) {
-            console.log(exception)
+            // console.log(exception)
         }
     })
 }
