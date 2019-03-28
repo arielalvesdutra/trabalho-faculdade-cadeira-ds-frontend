@@ -1,6 +1,6 @@
 const handleErrors = (response) => {
     if (!response.ok) {
-        throw (response.json());
+        throw response
     }
     return response;
 }
