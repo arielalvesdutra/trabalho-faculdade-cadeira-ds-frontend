@@ -40,6 +40,8 @@ const loginFormOnSubmit = () => {
                     localStorage.setItem('__hasApp__', JSON.stringify(json))
                     window.location.href = 'selecionar-perfil.html'
                 }).catch(error => {
+                    localStorage.removeItem('__hasApp__')
+                    localStorage.removeItem('__selectedProfile__')
                     error.json()
                         .then(errorMessage => {
                             displayErrors('<br>' + errorMessage)
