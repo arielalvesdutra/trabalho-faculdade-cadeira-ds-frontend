@@ -212,6 +212,18 @@ i {
     text-align: center;
 }
 
+.login-content-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.fields-errors {
+    color: brown;
+    display: hidden;
+    flex-direction: row;
+}
+
 .main-container {
     background-color: #eee;
     border-radius: 0px 0px 8px 8px;

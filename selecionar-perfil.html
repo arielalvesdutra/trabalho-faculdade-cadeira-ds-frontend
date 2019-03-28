@@ -11,41 +11,47 @@
 
 <body>
     <div class="main-container">
-
+        <!-- HEADER -->
         <div class="header">
             <div class="banner">
                 <img src="assets/imgs/banner.png" alt="Banner">
             </div>
         </div>
+        <!-- FIM HEADER -->
+        <!-- CONTENT CONTAINER-->
         <div class="content-container ">
-
+            <!-- SELECT PROFILE CONTAINER-->
             <div class="select-profile-container">
                 <div class="select-profile-user-title">
                     <h3 class="">
                         Usuário: Fulano de tal
                     </h3>
                 </div>
+                <!-- SELECT-OPTIONS -->
                 <div class="select-profile-select-options mt15">
-                    <form action="dashboard.html">
-                        <div class="row mt25 justify-center select-profile-text">
-                            Perfil de Usuário
-                        </div>
-                        <div class="row mt10 justify-center ">
-                            <select name="" id="">
-                                <option selected>Selecione o perfil ...</option>
-                                <option value="1">Trabalhador</option>
-                                <option value="2">Coordenador de Curso</option>
-                                <option value="3">Coordenador de Núcleo Pedagógico</option>
-                            </select>
-                        </div>
-                        <div class="row mt25 justify-flex-end">
-                            <button class="select-profile-button">Acessar</button>
-                        </div>
-                    </form>
+
+                    <div class="row mt25 justify-center select-profile-text">
+                        Perfil de Usuário
+                    </div>
+                    <div class="row mt10 justify-center ">
+                        <select id="profile-options">
+                            <option value="0" selected>Selecione o perfil ...</option>
+                        </select>
+                    </div>
+                    <div id="select-profile-fields-errors" class="justify-center fields-errors mt15">
+                    </div>
+                    <div class="row mt25 justify-flex-end">
+                        <button id="select-profile-button" class="select-profile-button">Acessar</button>
+                    </div>
                 </div>
             </div>
+            <!-- FIM SELECT-OPTIONS -->
         </div>
+        <!-- FIM SELECT PROFILE CONTAINER-->
     </div>
+    <!-- FIM CONTENT CONTAINER-->
+    <script type="module" src="assets/js/selecionar-perfil.js"></script>
+
 </body>
 
 </html>
