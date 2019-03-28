@@ -1,6 +1,17 @@
 import { backendUrl } from './backend.js'
 import handleErrors from './handle-errors.js'
 
+const displayErrors = errors => {
+    let loginDiv = document.getElementById('login-fields-errors')
+    loginDiv.style.display = 'block'
+    loginDiv.innerHTML = errors
+}
+
+const hideErrors = () => {
+    let loginDiv = document.getElementById('login-fields-errors')
+    loginDiv.style.display = 'none'
+}
+
 const loginFormOnSubmit = () => {
     document.loginForm.onsubmit = async event => {
         event.preventDefault()
@@ -29,11 +40,14 @@ const loginFormOnSubmit = () => {
                     localStorage.setItem('__hasApp__', JSON.stringify(json))
                     window.location.href = 'selecionar-perfil.html'
                 }).catch(error => {
-                    localStorage.removeItem('__hasApp__')
+                    error.json()
+                        .then(errorMessage => {
+                            displayErrors('<br>' + errorMessage)
+                        })
                 })
 
         } catch (exception) {
-            console.error(exception)
+            // console.error(exception)
         }
     }
 }
@@ -45,30 +59,27 @@ const validadeSignInFields = (email, password) => {
     let hasErrors = ''
 
     if (email.length <= 0) {
-        hasErrors += "<br> É necessário preencher o e-mail."
+        hasErrors += "<br> O campo e-mail é de preenchimento obrigatório."
     }
 
     if (!isValidEmailFormat(email) && email.length > 0) {
-        hasErrors += "<br> O formato do e-mail é inválido."
+        hasErrors += "<br> O e-mail informado para autenticação, não é um e-mail válido."
     }
-    
+
     if (password.length <= 0) {
-        hasErrors += "<br> É necessário preencher a senha."
-    }   
+        hasErrors += "<br> O campo senha é de preenchimento obrigatório."
+    }
 
     if (password.length < 6 && password.length > 0) {
-        hasErrors += "<br> A senha precisa conter no mínimo 6 caracteres."
+        hasErrors += "<br> O campo senha precisa conter no mínimo 6 caracteres."
     }
 
     if (hasErrors) {
-        let loginDiv = document.getElementById('login-fields-errors')
-        loginDiv.style.display = 'block'
-        loginDiv.innerHTML = hasErrors
+        displayErrors(hasErrors)
 
         throw 'Erro de preenchimento de campos!'
     } else {
-        let loginDiv = document.getElementById('login-fields-errors')
-        loginDiv.style.display = 'none'
+        hideErrors()
     }
 }
 
