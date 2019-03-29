@@ -1,4 +1,4 @@
-import { validateToken } from './auth.js'
+import { validateToken, getUserPayload } from './auth.js'
 
 const buildUserProfileOptions = (userProfiles) => {
     let profileOptions = '<option value="0">Selecione o perfil desejado...</option>'
@@ -53,9 +53,17 @@ const selectProfile = () => {
     })
 }
 
+const setUserNameTitle = userName => {
+    const profileTitleDiv = document.getElementById('user-name-title')
+    profileTitleDiv.innerHTML = "Usuário: " + userName
+}
+
 const startUp = () => {
 
     validateToken()
+
+    let userPayload = getUserPayload()
+    setUserNameTitle(userPayload.name)
     
     loadUserProfileOptions()
     selectProfile()
