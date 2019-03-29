@@ -41,6 +41,14 @@ a {
     flex:3;
 }
 
+.admin-date-input {
+    font-size: 14px;
+    padding: 7px 5px 8px 15px;
+    margin-right: 7px;
+    flex:1;
+    background-color: white;
+}
+
 .admin-input {
     font-size: 14px;
     padding: 10px;
@@ -93,6 +101,15 @@ a {
     justify-content: space-between;
     padding: 15px;
 }
+
+.admin-time-input {
+    font-size: 14px;
+    padding: 7px 5px 8px 15px;
+    margin-right: 7px;
+    flex:1;
+    background-color: white;
+}
+
 
 .align-items-center {
     align-items: center;
