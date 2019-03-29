@@ -1,4 +1,21 @@
 
+const getSelectedProfile = () => {
+    return JSON.parse(localStorage.getItem('__selectedProfile__'))
+}
+
+const getUserPayload = () => {
+
+    const tokenStoreage = JSON.parse(localStorage.getItem('__hasApp__'))
+
+    return tokenStoreage.payload
+}
+
+const getUserToken = () => {
+    const tokenStoreage = JSON.parse(localStorage.getItem('__hasApp__'))
+
+    return tokenStoreage.token
+}
+
 const hasUserSelectedProfile = () => {
     let selectedProfile = JSON.parse(localStorage.getItem('__selectedProfile__'))
 
@@ -31,4 +48,10 @@ const validateToken = () => {
     }
 }
 
-export { validadeProfileSelection, validateToken }
+export { 
+    getSelectedProfile, 
+    getUserPayload, 
+    getUserToken,
+    validadeProfileSelection, 
+    validateToken 
+}
