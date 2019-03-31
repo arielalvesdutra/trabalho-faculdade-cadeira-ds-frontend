@@ -55,7 +55,7 @@ const setEmployeeDashboardContainer = employeeAdjustments => {
 
         employeeDashboardContainer.innerHTML =
             '<div class="row mt10 wrap justify-center align-items-center"> ' +
-            '<strong>Você possui ' + employeeAdjustments.length + ' Reajustes Iniciados!</strong>' +
+            '<strong>Você possui ' + employeeAdjustments.length + ' Reajuste(s) Iniciado(s)!</strong>' +
             '</div>' +
             '<div class="row mt25 wrap justify-around"> ' +
             '<a href="inserir-horas.html" class="admin-button">Adicionar Ajuste</a>' +
