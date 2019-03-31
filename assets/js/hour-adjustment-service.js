@@ -85,4 +85,33 @@ export default class HourAdjustmentService {
 
             })
     }
+
+    updateHourAdjustment = async (id, date, entryHour, exitHour, justificationId) =>  {
+        const userToken = getUserToken()
+        let headers = new Headers()
+
+        headers.append('Authorization', 'bearer ' + userToken)
+
+        const url = backendUrl + 'hours-adjustments/' + id
+
+        let data = new FormData()
+
+        data.append('date', date)
+        data.append('entryHour', entryHour)
+        data.append('exitHour', exitHour)
+        data.append('justification[id]', justificationId)
+
+        let httpMethod = {
+            method: 'PUT',
+            mode: 'cors',
+            headers: headers,
+            body: data
+        }
+
+        fetch(url, httpMethod)
+            .then(handleErrors)
+            .catch(error => {
+
+            })
+    }
 }
