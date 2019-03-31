@@ -6,6 +6,27 @@ export default class HourAdjustmentService {
     constructor() {
     }
 
+    deleteHourAdjustment = async (id) => {
+        const userToken = getUserToken()
+        let headers = new Headers()
+
+        headers.append('Authorization', 'bearer ' + userToken)
+
+        const httpMethod = {
+            method: 'DELETE',
+            mode: 'cors',
+            headers: headers
+        }
+
+        const url = backendUrl + 'hours-adjustments/' + id
+
+        fetch(url, httpMethod)
+            .then(handleErrors)
+            .catch(error => {
+
+            })
+    }
+
     getEmployeeAdjustments = async () => {
 
         const userPayload = getUserPayload()
@@ -27,16 +48,18 @@ export default class HourAdjustmentService {
             .then(response => response.json())
             .then(json => json)
             .catch(error => {
+                throw 'error'
             })
 
         return employeeAdjustments
+
     }
 
     insertHourAdjustment = async (date, entryHour, exitHour, justificationId) => {
         const userPayload = getUserPayload()
         const userToken = getUserToken()
         let headers = new Headers()
-        
+
         headers.append('Authorization', 'bearer ' + userToken)
 
         const url = backendUrl + 'hours-adjustments'
@@ -58,6 +81,8 @@ export default class HourAdjustmentService {
 
         fetch(url, httpMethod)
             .then(handleErrors)
-            .catch(error)
+            .catch(error => {
+
+            })
     }
 }
