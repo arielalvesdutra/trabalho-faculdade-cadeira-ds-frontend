@@ -31,4 +31,33 @@ export default class HourAdjustmentService {
 
         return employeeAdjustments
     }
+
+    insertHourAdjustment = async (date, entryHour, exitHour, justificationId) => {
+        const userPayload = getUserPayload()
+        const userToken = getUserToken()
+        let headers = new Headers()
+        
+        headers.append('Authorization', 'bearer ' + userToken)
+
+        const url = backendUrl + 'hours-adjustments'
+
+        let data = new FormData()
+
+        data.append('date', date)
+        data.append('entryHour', entryHour)
+        data.append('exitHour', exitHour)
+        data.append('userId', userPayload.id)
+        data.append('justification[id]', justificationId)
+
+        let httpMethod = {
+            method: 'POST',
+            mode: 'cors',
+            headers: headers,
+            body: data
+        }
+
+        fetch(url, httpMethod)
+            .then(handleErrors)
+            .catch(error)
+    }
 }
