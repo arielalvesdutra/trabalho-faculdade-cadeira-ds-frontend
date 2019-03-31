@@ -6,10 +6,10 @@ import JustificationService from './justification-service.js'
 const buildAdjustmentsListTbody = (hoursAdjustments, justifications) => {
 
     let tbody = ''
-    let justificationsArray = formatJusticationsIndexWithId(justifications)
-    let hoursAdjustmentsArray = Object.values(hoursAdjustments)
-
-    if (hoursAdjustments.length > 0) {
+    
+    if (hoursAdjustments) {
+        let justificationsArray = formatJusticationsIndexWithId(justifications)
+        let hoursAdjustmentsArray = Object.values(hoursAdjustments)
 
         hoursAdjustmentsArray.forEach((adjustment) => {
             tbody +=
@@ -23,7 +23,8 @@ const buildAdjustmentsListTbody = (hoursAdjustments, justifications) => {
                     <button class="edit-button" title="Editar ajuste">
                         <i class="far fa fa-edit"></i>
                     </button>
-                    <button class="delete-button" title="Excluir ajuste">
+                    <button id="deleteButton" value="${adjustment['id']}" 
+                            class="delete-button" title="Excluir ajuste">
                         <i class="far fa fa-trash"></i>
                     </button>
                               
@@ -33,7 +34,9 @@ const buildAdjustmentsListTbody = (hoursAdjustments, justifications) => {
     } else {
         tbody =
             `<tr>
-                <td colspan="6"> <b>Nenhum ajuste de horas foi inserido.</b> <td/>
+                <td colspan="6">
+                    <b>Nenhum ajuste encontrado.</b>
+                </td>
             </tr>`
     }
 
@@ -54,10 +57,36 @@ const buildJustificationOptions = (justifications) => {
     return justificationOptions
 }
 
+const deleteAdjustmentOnClick = () => {
+
+    let deleteButtons = document.getElementsByClassName('delete-button')
+    for (let deleteButton of deleteButtons) {
+        deleteButton.onclick = async () => {
+
+            try {
+
+                let hourAdjustmentService = new HourAdjustmentService()
+                hourAdjustmentService.deleteHourAdjustment(deleteButton.value)
+
+                loadHoursAdjustments()
+            } catch (error) {
+
+            }
+        }
+    }
+}
+
 const fillAdjustmentsListTable = (hoursAdjustments, justifications) => {
+
+    let tbody
     let adjustmentsListTable = document.querySelector('#adjustments-list-table')
     let adjustmentsListTbody = adjustmentsListTable.querySelector('tbody')
-    let tbody = buildAdjustmentsListTbody(hoursAdjustments, justifications)
+
+    if (hoursAdjustments){
+        tbody = buildAdjustmentsListTbody(hoursAdjustments, justifications)
+    } else {
+        tbody = buildAdjustmentsListTbody(null, null)
+    }
 
     adjustmentsListTbody.innerHTML = tbody
 }
@@ -70,21 +99,30 @@ const fillJustificationOptions = (justifications) => {
 }
 
 const formatJusticationsIndexWithId = justifications => {
+
     let justificationsArray = []
 
-    for (let justification of justifications) {
-        justificationsArray[`id_${justification.id}`] = justification.title
+    if (justifications) {
+        for (let justification of justifications) {
+            justificationsArray[`id_${justification.id}`] = justification.title
+        }
     }
 
     return justificationsArray
 }
 
 const getHoursAdjustments = async () => {
-    let hourAdjustmentService = new HourAdjustmentService()
+    try {
 
-    let hoursAdjustments = hourAdjustmentService.getEmployeeAdjustments()
+        let hourAdjustmentService = new HourAdjustmentService()
 
-    return hoursAdjustments
+        let hoursAdjustments = hourAdjustmentService.getEmployeeAdjustments()
+
+        return hoursAdjustments
+
+    } catch (error) {
+
+    }
 }
 
 const getJustifications = async () => {
@@ -138,11 +176,18 @@ const insertAdjustmentFormOnSubmit = () => {
 }
 
 const loadHoursAdjustments = async () => {
-    let justifications = await getJustifications()
-    let hoursAdjustments = await getHoursAdjustments()
+    try {
 
-    fillAdjustmentsListTable(hoursAdjustments, justifications)
+        let justifications = await getJustifications()
+        let hoursAdjustments = await getHoursAdjustments()
 
+        fillAdjustmentsListTable(hoursAdjustments, justifications)
+
+        deleteAdjustmentOnClick()
+
+    } catch (error) {
+        fillAdjustmentsListTable(null, null)
+    }
 }
 
 const setProfileTitle = profileTitle => {
@@ -193,13 +238,18 @@ const startUp = async () => {
     let selectedProfile = getSelectedProfile()
     setProfileTitle(selectedProfile.name)
 
-    let justifications = await getJustifications()
-    fillJustificationOptions(justifications)
+    try {
+        let justifications = await getJustifications()
+        fillJustificationOptions(justifications)
 
-    let hoursAdjustments = await getHoursAdjustments()
-    fillAdjustmentsListTable(hoursAdjustments, justifications)
+        let hoursAdjustments = await getHoursAdjustments()
+        fillAdjustmentsListTable(hoursAdjustments, justifications)
+    } catch (error) {
+        fillAdjustmentsListTable(null, null)
+    }
 
     insertAdjustmentFormOnSubmit()
+    deleteAdjustmentOnClick()
 }
 
 const validateInsertFormFields = (date, entryHour, exitHour, justificationId) => {
