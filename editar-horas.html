@@ -51,7 +51,7 @@
                 <!-- FIM NOME E PERFIL USUÁRIO -->
                <!-- CONSULTA -->
                <div class="row mt25 ml15">
-                    <h3>Insere Hora</h3>
+                    <h3>Editar Horas</h3>
                 </div>
                 <div class="admin-content-container mt10">
                     <div class="row mt10 wrap justify-around">
@@ -60,7 +60,7 @@
                                 Data Inicio
                             </div>
                             <div class="row mt10">
-                                <input type="text" class="admin-input" placeholder="DD/MM/AAAA">
+                                <input type="date" name="entryDate" class="admin-date-input">
                             </div>
                         </div>
                         <div class="column flex1">
@@ -68,7 +68,7 @@
                                 Data Saída
                             </div>
                             <div class="row mt10">
-                                <input type="text" class="admin-input" placeholder="DD/MM/AAAA">
+                                <input type="date" name="exitDate" class="admin-date-input">
                             </div>
                         </div>
 
@@ -78,8 +78,9 @@
                             </div>
 
                             <div class="row mt10">
-                                <select type="text" class="admin-input">
-                                    <option>Prod. Conteúdo </option>
+                                <select id="justification-options" name="justification" type="text"
+                                    class="admin-input">
+                                    <option value="0">Favor selecionar a justificativa...</option>
                                 </select>
                             </div>
                         </div>
