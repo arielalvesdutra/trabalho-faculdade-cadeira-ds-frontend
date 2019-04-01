@@ -36,6 +36,18 @@ const isLogged = () => {
     return true
 }
 
+const logOut = message => {
+
+    if (message) {
+        alert(message)
+    }
+
+    localStorage.removeItem('__hasApp__')
+    localStorage.removeItem('__selectedProfile__')
+
+    window.location.href = 'index.html'
+}
+
 const validadeProfileSelection = () => {
     if (!hasUserSelectedProfile()) {
         window.location.href = 'selecionar-perfil.html'
@@ -43,15 +55,17 @@ const validadeProfileSelection = () => {
 }
 
 const validateToken = () => {
-    if(!isLogged()) {
-        window.location.href = 'login.html'
+    if (!isLogged()) {
+        logOut()
     }
 }
 
-export { 
-    getSelectedProfile, 
-    getUserPayload, 
+export {
+    getSelectedProfile,
+    getUserPayload,
     getUserToken,
-    validadeProfileSelection, 
-    validateToken 
+    isLogged,
+    logOut,
+    validadeProfileSelection,
+    validateToken
 }
