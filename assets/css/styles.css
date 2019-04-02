@@ -152,6 +152,15 @@ button {
     cursor: pointer;
 }
 
+.cancel-button {
+    background-color: red;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    padding: 10px;
+    margin-right: 7px;
+}
+
 .column {
     display: flex;
     flex-direction: column;
@@ -368,6 +377,15 @@ i {
 .table-default table, th, td {
     border: 1px solid #bbb;
     padding: 7px 5px;
+}
+
+.update-button {
+    background-color: green;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    padding: 10px;
+    margin-right: 7px;
 }
 
 .wrap {
