@@ -90,22 +90,23 @@ export default class HourAdjustmentService {
         const userToken = getUserToken()
         let headers = new Headers()
 
+        headers.set('Content-Type', 'application/json')
         headers.append('Authorization', 'bearer ' + userToken)
 
         const url = backendUrl + 'hours-adjustments/' + id
-
-        let data = new FormData()
-
-        data.append('date', date)
-        data.append('entryHour', entryHour)
-        data.append('exitHour', exitHour)
-        data.append('justification[id]', justificationId)
 
         let httpMethod = {
             method: 'PUT',
             mode: 'cors',
             headers: headers,
-            body: data
+            body: `{ 
+                    "date": "${date}" ,
+                    "entryHour": "${entryHour}",
+                    "exitHour": "${exitHour}",
+                    "justification": {
+                        "id": "${justificationId}"
+                    }
+                }`
         }
 
         fetch(url, httpMethod)
