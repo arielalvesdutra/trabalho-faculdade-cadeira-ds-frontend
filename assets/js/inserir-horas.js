@@ -13,7 +13,7 @@ const buildAdjustmentsListTbody = (hoursAdjustments, justifications) => {
 
         hoursAdjustmentsArray.forEach((adjustment) => {
             tbody +=
-                `<tr>
+                `<tr id="tr_${adjustment['id']}">
                 <td>${adjustment["date"]}</td>
                 <td>${adjustment["entryHour"]}</td>
                 <td>${adjustment["exitHour"]}</td>
@@ -63,17 +63,26 @@ const deleteAdjustmentOnClick = () => {
     for (let deleteButton of deleteButtons) {
         deleteButton.onclick = async () => {
 
-            try {
+            let confirmDelete = confirm ("Deseja realmente excluir este registro?")
 
-                let hourAdjustmentService = new HourAdjustmentService()
-                hourAdjustmentService.deleteHourAdjustment(deleteButton.value)
-
-                loadHoursAdjustments()
-            } catch (error) {
-
+            if (confirmDelete) {
+                       
+                try {
+                    
+                    let hourAdjustmentService = new HourAdjustmentService()
+                    hourAdjustmentService.deleteHourAdjustment(deleteButton.value)
+                    
+                    loadHoursAdjustments()
+                } catch (error) {
+                    
+                }
             }
         }
     }
+}
+
+const editAdjustmentOnClick = () => {
+    
 }
 
 const fillAdjustmentsListTable = (hoursAdjustments, justifications) => {
