@@ -68,6 +68,21 @@ const fillJustificationOptions = (justifications) => {
     justificationOptions.innerHTML = optionsElements
 }
 
+const fillStatusArea = adjustmentsStatus => {
+
+    let adjustmentStatusArea = document.querySelector("#adjustment-status-area")
+
+    if (adjustmentsStatus) {
+
+        adjustmentStatusArea.innerHTML = 
+            `<strong>${adjustmentsStatus.name}</strong>`
+
+    } else {
+        adjustmentStatusArea.innerHTML = 
+        `<strong>Ajustes ainda não enviados para análise.</strong>`
+    }
+}
+
 const formatJusticationsIndexWithId = justifications => {
 
     let justificationsArray = []
@@ -92,6 +107,19 @@ const getHoursAdjustments = async () => {
 
     } catch (error) {
 
+    }
+}
+
+const getHoursAdjustmentsStatus = async () => {
+    try  {
+        let hourAdjustmentService = new HourAdjustmentService()
+        let adjustmentsStatus = hourAdjustmentService.getEmployeeAdjusmentsStatus()
+
+        return adjustmentsStatus
+
+    } catch(error) {
+        console.log('oiiiii')
+        return "Ajustes não inciados"
     }
 }
 
@@ -124,6 +152,14 @@ const startUp = async () => {
 
     let selectedProfile = getSelectedProfile()
     setProfileTitle(selectedProfile.name)
+
+    try {
+
+        let employeeAdjusmentsStatus = await getHoursAdjustmentsStatus()
+        fillStatusArea(employeeAdjusmentsStatus)
+    } catch(erro) {
+        fillStatusArea(null)
+    }
 
     try {
         let justifications = await getJustifications()
