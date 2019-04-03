@@ -10,9 +10,15 @@ const loadUserProfileHoursAdjustments = async () => {
 
     if (selectedProfile.code == 'employee') {
 
-        let employeeAdjustments = await hourAdjustmentService.getEmployeeAdjustments()
+        try {
 
-        setEmployeeDashboardContainer(employeeAdjustments)
+            let employeeAdjustments = await hourAdjustmentService.getEmployeeAdjustments()
+    
+            setEmployeeDashboardContainer(employeeAdjustments)
+        } catch(error){
+
+            setEmployeeDashboardContainer(null)
+        }
     } else if (selectedProfile.code == 'course_coordinator') {
         setCoordinatorDashboardContainer()
     } else if (selectedProfile.code == 'coordinator_of_pedagogical_core') {
@@ -45,11 +51,11 @@ const setCoordinatorDashboardContainer = () => {
 const setEmployeeDashboardContainer = employeeAdjustments => {
     const employeeDashboardContainer = document.getElementById('admin-dashboard-container')
 
-    if (employeeAdjustments.length > 0) {
+    if (employeeAdjustments) {
 
         employeeDashboardContainer.innerHTML =
             '<div class="row mt10 wrap justify-center align-items-center"> ' +
-            '<strong>Você possui ' + employeeAdjustments.length + ' Reajustes Iniciados!</strong>' +
+            '<strong>Você possui ' + employeeAdjustments.length + ' Reajuste(s) Iniciado(s)!</strong>' +
             '</div>' +
             '<div class="row mt25 wrap justify-around"> ' +
             '<a href="inserir-horas.html" class="admin-button">Adicionar Ajuste</a>' +

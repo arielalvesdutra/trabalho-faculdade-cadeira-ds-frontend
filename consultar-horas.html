@@ -42,17 +42,17 @@
             <div class="admin-container">
                 <!-- NOME E PERFIL USUÁRIO -->
                 <div class="admin-profile-user-title">
-                    <h3 class="">
-                        Usuário: Fulano de tal
+                    <h3 id="user-name-title">
+                        Usuário:
                     </h3>
-                    <h3 class="">
-                        Perfil: Trabalhador
+                    <h3 id="profile-title">
+                        Perfil:
                     </h3>
                 </div>
                 <!-- FIM NOME E PERFIL USUÁRIO -->
                 <!-- CONSULTA -->
                 <div class="row mt25 ml15">
-                    <h3>Insere Hora</h3>
+                    <h3>Consultar Horas</h3>
                 </div>
                 <div class="admin-content-container mt10">
                     <div class="row mt10 wrap justify-around">
@@ -61,7 +61,7 @@
                                 Data Inicio
                             </div>
                             <div class="row mt10">
-                                <input type="text" class="admin-input" placeholder="DD/MM/AAAA">
+                                <input type="date" name="entryDate" class="admin-date-input">
                             </div>
                         </div>
                         <div class="column flex1">
@@ -69,7 +69,7 @@
                                 Data Saída
                             </div>
                             <div class="row mt10">
-                                <input type="text" class="admin-input" placeholder="DD/MM/AAAA">
+                                <input type="date" name="exitDate" class="admin-date-input">
                             </div>
                         </div>
 
@@ -79,8 +79,9 @@
                             </div>
 
                             <div class="row mt10">
-                                <select type="text" class="admin-input">
-                                    <option>Prod. Conteúdo </option>
+                                <select id="justification-options" name="justification" type="text"
+                                    class="admin-input">
+                                    <option value="0">Favor selecionar a justificativa...</option>
                                 </select>
                             </div>
                         </div>
@@ -89,14 +90,14 @@
                         <button class="admin-button">Consulta</button>
                     </div>
                 </div>
-                <!-- CONSULTA -->
+                <!-- FIM CONSULTA -->
                 <!-- LISTA DE HORAS -->
                 <div class="row mt15 ml15">
                     <h3>Lista de Horas</h3>
                 </div>
                 <div class="admin-content-container mt10">
                     <div class="row mt10 justify-center flex1">
-                        <table class="table-default bg-white" style="overflow:auto;">
+                        <table id="adjustments-list-table" class="table-default bg-white" style="overflow:auto;">
                             <thead class="bg-gray-soft">
                                 <tr>
                                     <th>
@@ -117,21 +118,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>10/10/2016</td>
-                                    <td>08:00</td>
-                                    <td>12:00</td>
-                                    <td>4</td>
-                                    <td>Versionamento</td>
-
-                                </tr>
-                                <tr>
-                                    <td>10/10/2016</td>
-                                    <td>08:00</td>
-                                    <td>12:00</td>
-                                    <td>4</td>
-                                    <td>Versionamento</td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -154,7 +140,7 @@
                         <h3>Status</h3>
                     </div>
                 <div class="admin-content-container mt10">
-                    <div class="row mt10 status-text flex1">
+                    <div id="adjustment-status-area" class="row mt10 status-text flex1">
                         <strong>
                             Enviada para o coordenador.
                         </strong>
@@ -165,6 +151,7 @@
             </div>
         </div>
     </div>
+    <script type="module" src="assets/js/consultar-horas.js"></script>
 </body>
 
 </html>

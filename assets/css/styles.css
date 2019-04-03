@@ -41,6 +41,14 @@ a {
     flex:3;
 }
 
+.admin-date-input {
+    font-size: 14px;
+    padding: 7px 5px 8px 15px;
+    margin-right: 7px;
+    flex:1;
+    background-color: white;
+}
+
 .admin-input {
     font-size: 14px;
     padding: 10px;
@@ -94,6 +102,15 @@ a {
     padding: 15px;
 }
 
+.admin-time-input {
+    font-size: 14px;
+    padding: 7px 5px 8px 15px;
+    margin-right: 7px;
+    flex:1;
+    background-color: white;
+}
+
+
 .align-items-center {
     align-items: center;
 }
@@ -135,6 +152,15 @@ button {
     cursor: pointer;
 }
 
+.cancel-button {
+    background-color: red;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    padding: 10px;
+    margin-right: 7px;
+}
+
 .column {
     display: flex;
     flex-direction: column;
@@ -144,6 +170,24 @@ button {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+}
+
+.delete-button {
+    background-color: red;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    padding: 10px;
+    margin-right: 7px;
+}
+
+.edit-button {
+    background-color: orange;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    padding: 10px;
+    margin-right: 7px;
 }
 
 .flex1{
@@ -333,6 +377,15 @@ i {
 .table-default table, th, td {
     border: 1px solid #bbb;
     padding: 7px 5px;
+}
+
+.update-button {
+    background-color: green;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    padding: 10px;
+    margin-right: 7px;
 }
 
 .wrap {
