@@ -55,6 +55,32 @@ export default class HourAdjustmentService {
 
     }
 
+    getEmployeeAdjusmentsStatus = async () => {
+        const userPayload = getUserPayload()
+        const userToken = getUserToken()
+        let headers = new Headers()
+
+        headers.append('Authorization', 'bearer ' + userToken)
+
+        const httpMethod = {
+            method: 'GET',
+            mode: 'cors',
+            headers: headers
+        }
+
+        const url = backendUrl + 'hours-adjustments/employee/' + userPayload.id + '/status'
+
+        let employeeAdjustments = await fetch(url, httpMethod)
+            .then(handleErrors)
+            .then(response => response.json())
+            .then(json => json)
+            .catch(error => {
+                throw 'error'
+            })
+
+        return employeeAdjustments
+    }
+
     insertHourAdjustment = async (date, entryHour, exitHour, justificationId) => {
         const userPayload = getUserPayload()
         const userToken = getUserToken()
@@ -77,6 +103,28 @@ export default class HourAdjustmentService {
             mode: 'cors',
             headers: headers,
             body: data
+        }
+
+        fetch(url, httpMethod)
+            .then(handleErrors)
+            .catch(error => {
+
+            })
+    }
+
+    sendAdjustmentApprovalRequest = async () => {
+        const userToken = getUserToken()
+        let headers = new Headers()
+
+        headers.set('Content-Type', 'application/json')
+        headers.append('Authorization', 'bearer ' + userToken)
+
+        const url = backendUrl + 'hours-adjustments/approval-request'
+
+        let httpMethod = {
+            method: 'POST',
+            mode: 'cors',
+            headers: headers
         }
 
         fetch(url, httpMethod)
