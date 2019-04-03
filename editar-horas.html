@@ -49,45 +49,47 @@
                     </h3>
                 </div>
                 <!-- FIM NOME E PERFIL USUÁRIO -->
-               <!-- CONSULTA -->
-               <div class="row mt25 ml15">
+                <!-- CONSULTA -->
+                <div class="row mt25 ml15">
                     <h3>Editar Horas</h3>
                 </div>
                 <div class="admin-content-container mt10">
-                    <div class="row mt10 wrap justify-around">
-                        <div class="column flex1">
-                            <div class="row mt5">
-                                Data Inicio
+                    <form id="filterAdjustmentsForm" name="filterAdjustmentsForm">
+                        <div class="row mt10 wrap justify-around">
+                            <div class="column flex1">
+                                <div class="row mt5">
+                                    Data Inicio
+                                </div>
+                                <div class="row mt10">
+                                    <input type="date" name="initDate" class="admin-date-input">
+                                </div>
                             </div>
-                            <div class="row mt10">
-                                <input type="date" name="entryDate" class="admin-date-input">
-                            </div>
-                        </div>
-                        <div class="column flex1">
-                            <div class="row mt5">
-                                Data Saída
-                            </div>
-                            <div class="row mt10">
-                                <input type="date" name="exitDate" class="admin-date-input">
-                            </div>
-                        </div>
-
-                        <div class="column flex2">
-                            <div class="row mt5">
-                                Justificativa
+                            <div class="column flex1">
+                                <div class="row mt5">
+                                    Data Saída
+                                </div>
+                                <div class="row mt10">
+                                    <input type="date" name="endDate" class="admin-date-input">
+                                </div>
                             </div>
 
-                            <div class="row mt10">
-                                <select id="justification-options" name="justification" type="text"
-                                    class="admin-input">
-                                    <option value="0">Favor selecionar a justificativa...</option>
-                                </select>
+                            <div class="column flex2">
+                                <div class="row mt5">
+                                    Justificativa
+                                </div>
+
+                                <div class="row mt10">
+                                    <select id="justification-options" name="justification" type="text"
+                                        class="admin-input">
+                                        <option value="0">Favor selecionar a justificativa...</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row mt25 justify-flex-end">
-                        <button class="admin-button">Consulta</button>
-                    </div>
+                        <div class="row mt25 justify-flex-end">
+                            <button class="admin-button">Consulta</button>
+                        </div>
+                    </form>
                 </div>
                 <!-- FIM CONSULTA -->
                 <!-- LISTA DE HORAS -->
@@ -127,8 +129,8 @@
                 <!-- FIM LISTA DE HORAS-->
                 <!-- BOTÃO ENVIAR PARA ANÁLISE -->
                 <div class="row mt25 justify-flex-end">
-                    <button class="admin-button">Voltar</button>
-                    <button id="sendApprovalRequest"  class="admin-button">Enviar para Análise</button>
+                    <a href="dashboard.html" class="admin-button">Voltar</a>
+                    <button id="sendApprovalRequest" class="admin-button">Enviar para Análise</button>
                 </div>
                 <!-- FIM BOTÃO ENVIAR PARA ANÁLISE -->
             </div>
