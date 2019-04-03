@@ -141,6 +141,33 @@ const fillJustificationOptions = (justifications) => {
     justificationOptions.innerHTML = optionsElements
 }
 
+const filterAdjustmentFormOnSubmit = () => {
+    document.filterAdjustmentsForm.onsubmit = async event => {
+        event.preventDefault()
+
+        const form = event.target
+        const data = new FormData(form)
+
+        let initDate = data.get('initDate')
+        let endDate = data.get('endDate')
+        let justificationId = data.get('justification')
+
+        console.log(initDate, endDate, justificationId)
+
+        try {
+            let hourAdjustmentService = new HourAdjustmentService()
+
+            validateFilterFormFields(initDate, endDate, justificationId)
+
+            let adjustments = await hourAdjustmentService.searchEmployeeAdjustments(initDate, endDate, justificationId)
+
+            loadHoursAdjustments(adjustments)
+        } catch (exception) {
+            fillAdjustmentsListTable(null)
+        }
+    }
+}
+
 const formatJusticationsIndexWithId = justifications => {
 
     let justificationsArray = []
@@ -177,11 +204,16 @@ const getJustifications = async () => {
     return justifications
 }
 
-const loadHoursAdjustments = async () => {
+const loadHoursAdjustments = async (hoursAdjustments) => {
     try {
 
+        console.log(hoursAdjustments)
+
         let justifications = await getJustifications()
-        let hoursAdjustments = await getHoursAdjustments()
+
+        if (!hoursAdjustments) {
+            hoursAdjustments = await getHoursAdjustments()
+        }
 
         fillAdjustmentsListTable(hoursAdjustments, justifications)
 
@@ -311,6 +343,7 @@ const startUp = async () => {
     deleteAdjustmentOnClick()
     editAdjustmentOnClick()
     sendAdjustmentApprovalRequestOnClick()
+    filterAdjustmentFormOnSubmit()
 }
 
 const updateAdjustmentOnClick = () => {
@@ -334,6 +367,21 @@ const updateAdjustmentOnClick = () => {
         } catch(error) {
             console.log(error)
         }
+    }
+}
+
+const validateFilterFormFields = (initDate, endDate, justificationId) => {
+
+    if (initDate && (new Date(initDate)) == 'Invalid Date') {
+        throw 'Data de inicio inválida'
+    }
+
+    if (endDate && (new Date(endDate)) == 'Invalid Date') {
+        throw 'Data de limite inválida'
+    }
+
+    if (justificationId < 0) {
+        throw 'Justificativa inválida.'
     }
 }
 
