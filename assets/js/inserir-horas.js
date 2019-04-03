@@ -307,6 +307,19 @@ const loadHoursAdjustments = async () => {
     }
 }
 
+const sendAdjustmentApprovalRequestOnClick = () => {
+    let sendApprovalRequestLink = document.querySelector("#sendApprovalRequest")
+
+    sendApprovalRequestLink.onclick = ( )=> {
+        let hourAdjustmentService = new HourAdjustmentService()
+        hourAdjustmentService.sendAdjustmentApprovalRequest()
+
+        alert("Ajustes enviados para aprovação!")
+
+        window.location.href = 'dashboard.html'
+    }
+}
+
 const setProfileTitle = profileTitle => {
     const profileTitleDiv = document.getElementById('profile-title')
     profileTitleDiv.innerHTML = "Perfil: " + profileTitle
@@ -368,6 +381,7 @@ const startUp = async () => {
     insertAdjustmentFormOnSubmit()
     deleteAdjustmentOnClick()
     editAdjustmentOnClick()
+    sendAdjustmentApprovalRequestOnClick()
 }
 
 const updateAdjustmentOnClick = () => {
