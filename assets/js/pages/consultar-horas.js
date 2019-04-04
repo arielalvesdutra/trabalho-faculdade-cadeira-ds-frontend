@@ -1,6 +1,6 @@
-import { getSelectedProfile, getUserPayload, validadeProfileSelection, validateToken } from './auth.js'
-import HourAdjustmentService from './hour-adjustment-service.js'
-import JustificationService from './justification-service.js'
+import { getSelectedProfile, getUserPayload, validadeProfileSelection, validateToken } from '../auth.js'
+import HourAdjustmentService from '../services/hour-adjustment-service.js'
+import JustificationService from '../services/justification-service.js'
 
 const buildAdjustmentsListTbody = (hoursAdjustments, justifications) => {
 
@@ -83,6 +83,31 @@ const fillStatusArea = adjustmentsStatus => {
     }
 }
 
+const filterAdjustmentFormOnSubmit = () => {
+    document.filterAdjustmentsForm.onsubmit = async event => {
+        event.preventDefault()
+
+        const form = event.target
+        const data = new FormData(form)
+
+        let initDate = data.get('initDate')
+        let endDate = data.get('endDate')
+        let justificationId = data.get('justification')
+
+        try {
+            let hourAdjustmentService = new HourAdjustmentService()
+
+            validateFilterFormFields(initDate, endDate, justificationId)
+
+            let adjustments = await hourAdjustmentService.searchEmployeeAdjustments(initDate, endDate, justificationId)
+
+            loadHoursAdjustments(adjustments)
+        } catch (exception) {
+            fillAdjustmentsListTable(null)
+        }
+    }
+}
+
 const formatJusticationsIndexWithId = justifications => {
 
     let justificationsArray = []
@@ -118,7 +143,6 @@ const getHoursAdjustmentsStatus = async () => {
         return adjustmentsStatus
 
     } catch(error) {
-        console.log('oiiiii')
         return "Ajustes não inciados"
     }
 }
@@ -130,6 +154,22 @@ const getJustifications = async () => {
     let justifications = await justificationService.getJustifications()
 
     return justifications
+}
+
+const loadHoursAdjustments = async (hoursAdjustments) => {
+    try {
+
+        let justifications = await getJustifications()
+
+        if (!hoursAdjustments) {
+            hoursAdjustments = await getHoursAdjustments()
+        }
+
+        fillAdjustmentsListTable(hoursAdjustments, justifications)
+
+    } catch (error) {
+        fillAdjustmentsListTable(null, null)
+    }
 }
 
 const setProfileTitle = profileTitle => {
@@ -169,6 +209,23 @@ const startUp = async () => {
         fillAdjustmentsListTable(hoursAdjustments, justifications)
     } catch(error) {
         fillAdjustmentsListTable(null, null)
+    }
+
+    filterAdjustmentFormOnSubmit()
+}
+
+const validateFilterFormFields = (initDate, endDate, justificationId) => {
+
+    if (initDate && (new Date(initDate)) == 'Invalid Date') {
+        throw 'Data de inicio inválida'
+    }
+
+    if (endDate && (new Date(endDate)) == 'Invalid Date') {
+        throw 'Data de limite inválida'
+    }
+
+    if (justificationId < 0) {
+        throw 'Justificativa inválida.'
     }
 }
 

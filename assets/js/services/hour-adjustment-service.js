@@ -1,6 +1,6 @@
-import { getUserPayload, getUserToken } from './auth.js'
-import { backendUrl } from './backend.js'
-import handleErrors from './handle-errors.js'
+import { getUserPayload, getUserToken } from '../auth.js'
+import { backendUrl } from '../backend.js'
+import handleErrors from '../handle-errors.js'
 
 export default class HourAdjustmentService {
     constructor() {
@@ -112,6 +112,55 @@ export default class HourAdjustmentService {
             })
     }
 
+    searchEmployeeAdjustments = async (initDate, endDate, justificationId) => {
+        const userPayload = getUserPayload()
+        const userToken = getUserToken()
+        let headers = new Headers()
+        headers.append('Authorization', 'bearer ' + userToken)
+
+        let filters = []
+
+        if (initDate) {
+            filters.push(`initDate=${initDate}`)
+        }
+
+        if (endDate) {
+            filters.push(`endDate=${endDate}`)
+        }
+
+        if (justificationId > 0) {
+            filters.push(`justificationId=${justificationId}`)
+        }
+
+        let filtersParams = filters.reduce((url, filter) => {
+            if (url) {
+                return url += `&${filter}`
+            }
+
+            return url += `${filter}`
+
+        }, '')
+
+        const url =
+            backendUrl + 'search/hours-adjustments/employee/' + userPayload.id + '/filters?' + filtersParams
+
+        let httpMethod = {
+            method: 'GET',
+            mode: 'cors',
+            headers: headers
+        }
+
+        let employeeAdjustments = await fetch(url, httpMethod)
+            .then(handleErrors)
+            .then(response => response.json())
+            .then(json => json)
+            .catch(error => {
+                throw 'error'
+            })
+
+        return employeeAdjustments
+    }
+
     sendAdjustmentApprovalRequest = async () => {
         const userToken = getUserToken()
         let headers = new Headers()
@@ -134,7 +183,7 @@ export default class HourAdjustmentService {
             })
     }
 
-    updateHourAdjustment = async (id, date, entryHour, exitHour, justificationId) =>  {
+    updateHourAdjustment = async (id, date, entryHour, exitHour, justificationId) => {
         const userToken = getUserToken()
         let headers = new Headers()
 

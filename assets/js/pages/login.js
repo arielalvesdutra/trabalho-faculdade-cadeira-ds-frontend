@@ -1,5 +1,5 @@
-import { backendUrl } from './backend.js'
-import handleErrors from './handle-errors.js'
+import { backendUrl } from '../backend.js'
+import handleErrors from '../handle-errors.js'
 
 const displayErrors = errors => {
     let loginDiv = document.getElementById('login-fields-errors')

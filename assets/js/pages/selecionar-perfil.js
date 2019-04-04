@@ -1,4 +1,4 @@
-import { validateToken, getUserPayload } from './auth.js'
+import { validateToken, getUserPayload } from '../auth.js'
 
 const buildUserProfileOptions = (userProfiles) => {
     let profileOptions = '<option value="0">Selecione o perfil desejado...</option>'
