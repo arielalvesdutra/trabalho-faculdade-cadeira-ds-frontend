@@ -1,4 +1,6 @@
-import { getSelectedProfile, getUserPayload, validadeProfileSelection, validateToken } from '../auth.js'
+import { getSelectedProfile, getUserPayload, 
+    validateEmployeeProfile, validateProfileSelection, 
+    validateToken } from '../auth.js'
 import HourAdjustmentService from '../services/hour-adjustment-service.js'
 import JustificationService from '../services/justification-service.js'
 import { validateFilterFormFields, validateUpdateFields} from '../validators/editar-horas-validator.js'
@@ -363,7 +365,8 @@ const showCurrentEditMode = id => {
 
 const startUp = async () => {
     validateToken()
-    validadeProfileSelection()
+    validateProfileSelection()
+    validateEmployeeProfile()
 
     let userPayload = getUserPayload()
     setUserNameTitle(userPayload.name)
@@ -412,4 +415,4 @@ const updateAdjustmentOnClick = () => {
     }
 }
 
-startUp()
+window.onload = startUp()

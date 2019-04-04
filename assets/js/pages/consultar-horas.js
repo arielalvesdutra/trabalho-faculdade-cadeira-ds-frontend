@@ -1,4 +1,5 @@
-import { getSelectedProfile, getUserPayload, validadeProfileSelection, validateToken } from '../auth.js'
+import { getSelectedProfile, getUserPayload, validateEmployeeProfile,
+    validateProfileSelection, validateToken } from '../auth.js'
 import HourAdjustmentService from '../services/hour-adjustment-service.js'
 import JustificationService from '../services/justification-service.js'
 
@@ -184,8 +185,8 @@ const setUserNameTitle = userName => {
 
 const startUp = async () => {
     validateToken()
-    validadeProfileSelection()
-
+    validateProfileSelection()
+    validateEmployeeProfile()
 
     let userPayload = getUserPayload()
     setUserNameTitle(userPayload.name)
