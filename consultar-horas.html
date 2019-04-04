@@ -7,7 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>SAH - Sistema de Ajuste de Horas</title>
     <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
 
 </head>
@@ -55,40 +56,42 @@
                     <h3>Consultar Horas</h3>
                 </div>
                 <div class="admin-content-container mt10">
-                    <div class="row mt10 wrap justify-around">
-                        <div class="column flex1">
-                            <div class="row mt5">
-                                Data Inicio
+                    <form id="filterAdjustmentsForm" name="filterAdjustmentsForm">
+                        <div class="row mt10 wrap justify-around">
+                            <div class="column flex1">
+                                <div class="row mt5">
+                                    Data Inicio
+                                </div>
+                                <div class="row mt10">
+                                    <input type="date" name="initDate" class="admin-date-input">
+                                </div>
                             </div>
-                            <div class="row mt10">
-                                <input type="date" name="entryDate" class="admin-date-input">
-                            </div>
-                        </div>
-                        <div class="column flex1">
-                            <div class="row mt5">
-                                Data Saída
-                            </div>
-                            <div class="row mt10">
-                                <input type="date" name="exitDate" class="admin-date-input">
-                            </div>
-                        </div>
-
-                        <div class="column flex2">
-                            <div class="row mt5">
-                                Justificativa
+                            <div class="column flex1">
+                                <div class="row mt5">
+                                    Data Saída
+                                </div>
+                                <div class="row mt10">
+                                    <input type="date" name="endDate" class="admin-date-input">
+                                </div>
                             </div>
 
-                            <div class="row mt10">
-                                <select id="justification-options" name="justification" type="text"
-                                    class="admin-input">
-                                    <option value="0">Favor selecionar a justificativa...</option>
-                                </select>
+                            <div class="column flex2">
+                                <div class="row mt5">
+                                    Justificativa
+                                </div>
+
+                                <div class="row mt10">
+                                    <select id="justification-options" name="justification" type="text"
+                                        class="admin-input">
+                                        <option value="0">Favor selecionar a justificativa...</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row mt25 justify-flex-end">
-                        <button class="admin-button">Consulta</button>
-                    </div>
+                        <div class="row mt25 justify-flex-end">
+                            <button class="admin-button">Consulta</button>
+                        </div>
+                    </form>
                 </div>
                 <!-- FIM CONSULTA -->
                 <!-- LISTA DE HORAS -->
@@ -131,14 +134,14 @@
                         <a title="Download PDF">
                             <i class="far fa-3x fa-file-pdf"></i>
                         </a>
-                    
+
                     </div>
                 </div>
                 <!-- FIM LISTA DE HORAS-->
                 <!-- STATUS -->
                 <div class="row mt15 ml15">
-                        <h3>Status</h3>
-                    </div>
+                    <h3>Status</h3>
+                </div>
                 <div class="admin-content-container mt10">
                     <div id="adjustment-status-area" class="row mt10 status-text flex1">
                         <strong>
@@ -151,7 +154,7 @@
             </div>
         </div>
     </div>
-    <script type="module" src="assets/js/consultar-horas.js"></script>
+    <script type="module" src="assets/js/pages/consultar-horas.js"></script>
 </body>
 
 </html>

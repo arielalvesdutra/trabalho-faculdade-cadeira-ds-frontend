@@ -1,5 +1,5 @@
-import { getSelectedProfile, getUserPayload, validadeProfileSelection, validateToken } from './auth.js'
-import HourAdjustmentService from './hour-adjustment-service.js'
+import { getSelectedProfile, getUserPayload, validadeProfileSelection, validateToken } from '../auth.js'
+import HourAdjustmentService from '../services/hour-adjustment-service.js'
 
 const loadUserProfileHoursAdjustments = async () => {
     let selectedProfile = getSelectedProfile()

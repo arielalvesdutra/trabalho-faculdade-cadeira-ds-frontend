@@ -1,6 +1,7 @@
-import { getSelectedProfile, getUserPayload, validadeProfileSelection, validateToken } from './auth.js'
-import HourAdjustmentService from './hour-adjustment-service.js'
-import JustificationService from './justification-service.js'
+
+import { getSelectedProfile, getUserPayload, validadeProfileSelection, validateToken } from '../auth.js'
+import HourAdjustmentService from '../services/hour-adjustment-service.js'
+import JustificationService from '../services/justification-service.js'
 
 const buildAdjustmentsListTbody = (hoursAdjustments, justifications) => {
 
@@ -43,7 +44,7 @@ const buildAdjustmentsListTbody = (hoursAdjustments, justifications) => {
 }
 
 const buildJustificationOptions = (justifications) => {
-    let justificationOptions = '<option value="0">Favor selecionar a justificativa...</option>'
+    let justificationOptions = '<option value="0">Favor selecionar...</option>'
 
     let justificationsArray = Object.values(justifications)
 
@@ -119,135 +120,6 @@ const editAdjustmentOnClick = () => {
     }
 }
 
-const fillAdjustmentsListTable = (hoursAdjustments, justifications) => {
-
-    let tbody
-    let adjustmentsListTable = document.querySelector('#adjustments-list-table')
-    let adjustmentsListTbody = adjustmentsListTable.querySelector('tbody')
-
-    if (hoursAdjustments){
-        tbody = buildAdjustmentsListTbody(hoursAdjustments, justifications)
-    } else {
-        tbody = buildAdjustmentsListTbody(null, null)
-    }
-
-    adjustmentsListTbody.innerHTML = tbody
-}
-
-const fillJustificationOptions = (justifications) => {
-    let justificationOptions = document.getElementById('justification-options')
-    let optionsElements = buildJustificationOptions(justifications)
-
-    justificationOptions.innerHTML = optionsElements
-}
-
-const filterAdjustmentFormOnSubmit = () => {
-    document.filterAdjustmentsForm.onsubmit = async event => {
-        event.preventDefault()
-
-        const form = event.target
-        const data = new FormData(form)
-
-        let initDate = data.get('initDate')
-        let endDate = data.get('endDate')
-        let justificationId = data.get('justification')
-
-        console.log(initDate, endDate, justificationId)
-
-        try {
-            let hourAdjustmentService = new HourAdjustmentService()
-
-            validateFilterFormFields(initDate, endDate, justificationId)
-
-            let adjustments = await hourAdjustmentService.searchEmployeeAdjustments(initDate, endDate, justificationId)
-
-            loadHoursAdjustments(adjustments)
-        } catch (exception) {
-            fillAdjustmentsListTable(null)
-        }
-    }
-}
-
-const formatJusticationsIndexWithId = justifications => {
-
-    let justificationsArray = []
-
-    if (justifications) {
-        for (let justification of justifications) {
-            justificationsArray[`id_${justification.id}`] = justification.title
-        }
-    }
-
-    return justificationsArray
-}
-
-const getHoursAdjustments = async () => {
-    try {
-
-        let hourAdjustmentService = new HourAdjustmentService()
-
-        let hoursAdjustments = hourAdjustmentService.getEmployeeAdjustments()
-
-        return hoursAdjustments
-
-    } catch (error) {
-
-    }
-}
-
-const getJustifications = async () => {
-
-    let justificationService = new JustificationService()
-
-    let justifications = await justificationService.getJustifications()
-
-    return justifications
-}
-
-const loadHoursAdjustments = async (hoursAdjustments) => {
-    try {
-
-        console.log(hoursAdjustments)
-
-        let justifications = await getJustifications()
-
-        if (!hoursAdjustments) {
-            hoursAdjustments = await getHoursAdjustments()
-        }
-
-        fillAdjustmentsListTable(hoursAdjustments, justifications)
-
-        deleteAdjustmentOnClick()
-        editAdjustmentOnClick()
-
-    } catch (error) {
-        fillAdjustmentsListTable(null, null)
-    }
-}
-
-const sendAdjustmentApprovalRequestOnClick = () => {
-    let sendApprovalRequestLink = document.querySelector("#sendApprovalRequest")
-
-    sendApprovalRequestLink.onclick = ( )=> {
-        let hourAdjustmentService = new HourAdjustmentService()
-        hourAdjustmentService.sendAdjustmentApprovalRequest()
-
-        alert("Ajustes enviados para aprovação!")
-
-        window.location.href = 'dashboard.html'
-    }
-}
-
-const setProfileTitle = profileTitle => {
-    const profileTitleDiv = document.getElementById('profile-title')
-    profileTitleDiv.innerHTML = "Perfil: " + profileTitle
-}
-
-const setUserNameTitle = userName => {
-    const profileTitleDiv = document.getElementById('user-name-title')
-    profileTitleDiv.innerHTML = "Usuário: " + userName
-}
-
 const showCurrentEditMode = id => {
     let currentLine = document.querySelector('#tr_' + id) 
     let dateColumn = document.querySelector('#td_date_' + id)
@@ -320,6 +192,172 @@ const showCurrentEditMode = id => {
     currentLine.appendChild(editActionsColumn)
 }
 
+const fillAdjustmentsListTable = (hoursAdjustments, justifications) => {
+
+    let tbody
+    let adjustmentsListTable = document.querySelector('#adjustments-list-table')
+    let adjustmentsListTbody = adjustmentsListTable.querySelector('tbody')
+
+    if (hoursAdjustments){
+        tbody = buildAdjustmentsListTbody(hoursAdjustments, justifications)
+    } else {
+        tbody = buildAdjustmentsListTbody(null, null)
+    }
+
+    adjustmentsListTbody.innerHTML = tbody
+}
+
+const fillJustificationOptions = (justifications) => {
+    let justificationOptions = document.getElementById('justification-options')
+    let optionsElements = buildJustificationOptions(justifications)
+
+    justificationOptions.innerHTML = optionsElements
+}
+
+const formatJusticationsIndexWithId = justifications => {
+
+    let justificationsArray = []
+
+    if (justifications) {
+        for (let justification of justifications) {
+            justificationsArray[`id_${justification.id}`] = justification.title
+        }
+    }
+
+    return justificationsArray
+}
+
+const getHoursAdjustments = async () => {
+    try {
+
+        let hourAdjustmentService = new HourAdjustmentService()
+
+        let hoursAdjustments = hourAdjustmentService.getEmployeeAdjustments()
+
+        return hoursAdjustments
+
+    } catch (error) {
+
+    }
+}
+
+const getJustifications = async () => {
+
+    let justificationService = new JustificationService()
+
+    let justifications = await justificationService.getJustifications()
+
+    return justifications
+}
+
+const hideErrors = (element) => {
+    let errorField = document.querySelector('#' + element)
+    errorField.style.display = 'none'
+    errorField.innerHTML = ''
+}
+
+const hideAllErrors = () => {
+    let errorsFields = document.querySelectorAll('.fields-errors')
+    for (let errorField of errorsFields) {
+        errorField.style.display = 'none'
+        errorField.innerHTML = ''
+    }
+}
+
+const insertAdjustmentFormOnSubmit = () => {
+    document.insertAdjustmentForm.onsubmit = async event => {
+        event.preventDefault()
+
+        const form = event.target
+        const data = new FormData(form)
+
+        let date = data.get('date')
+        let entryHour = data.get('entryHour')
+        let exitHour = data.get('exitHour')
+        let justificationId = data.get('justification')
+
+        try {
+            let hourAdjustmentService = new HourAdjustmentService()
+
+            validateInsertFormFields(date, entryHour, exitHour, justificationId)
+
+            hourAdjustmentService.insertHourAdjustment(
+                date, entryHour, exitHour, justificationId)
+
+            loadHoursAdjustments()
+        } catch (exception) {
+
+        }
+    }
+}
+
+const loadHoursAdjustments = async () => {
+    try {
+
+        let justifications = await getJustifications()
+        let hoursAdjustments = await getHoursAdjustments()
+
+        fillAdjustmentsListTable(hoursAdjustments, justifications)
+
+        deleteAdjustmentOnClick()
+        editAdjustmentOnClick()
+
+    } catch (error) {
+        fillAdjustmentsListTable(null, null)
+    }
+}
+
+const sendAdjustmentApprovalRequestOnClick = () => {
+    let sendApprovalRequestLink = document.querySelector("#sendApprovalRequest")
+
+    sendApprovalRequestLink.onclick = ( )=> {
+        let hourAdjustmentService = new HourAdjustmentService()
+        hourAdjustmentService.sendAdjustmentApprovalRequest()
+
+        alert("Ajustes enviados para aprovação!")
+
+        window.location.href = 'dashboard.html'
+    }
+}
+
+const setProfileTitle = profileTitle => {
+    const profileTitleDiv = document.getElementById('profile-title')
+    profileTitleDiv.innerHTML = "Perfil: " + profileTitle
+}
+
+const setUserNameTitle = userName => {
+    const profileTitleDiv = document.getElementById('user-name-title')
+    profileTitleDiv.innerHTML = "Usuário: " + userName
+}
+
+const showDateErrors = message => {
+    let dateErrorsDiv = document.querySelector('#date-errors')
+    dateErrorsDiv.style.display = 'block'
+
+    let error = document.createElement('DIV')
+    error.innerHTML = message
+
+    dateErrorsDiv.appendChild(error)
+}
+
+const showEntryErrors = message => {
+    let entryErrorsDiv = document.querySelector('#entry-errors')
+    entryErrorsDiv.style.display = 'block'
+    entryErrorsDiv.innerHTML = message
+}
+
+const showExitErrors = message => {
+    let extiErrorsDiv = document.querySelector('#exit-errors')
+    extiErrorsDiv.style.display = 'block'
+    extiErrorsDiv.innerHTML = message
+}
+
+const showJustificationErrors = message => {
+    let justificationErrorsDiv = document.querySelector('#justification-errors')
+    justificationErrorsDiv.style.display = 'block'
+    justificationErrorsDiv.innerHTML = message
+}
+
 const startUp = async () => {
     validateToken()
     validadeProfileSelection()
@@ -336,14 +374,14 @@ const startUp = async () => {
 
         let hoursAdjustments = await getHoursAdjustments()
         fillAdjustmentsListTable(hoursAdjustments, justifications)
-    } catch(error) {
+    } catch (error) {
         fillAdjustmentsListTable(null, null)
     }
 
+    insertAdjustmentFormOnSubmit()
     deleteAdjustmentOnClick()
     editAdjustmentOnClick()
     sendAdjustmentApprovalRequestOnClick()
-    filterAdjustmentFormOnSubmit()
 }
 
 const updateAdjustmentOnClick = () => {
@@ -370,21 +408,6 @@ const updateAdjustmentOnClick = () => {
     }
 }
 
-const validateFilterFormFields = (initDate, endDate, justificationId) => {
-
-    if (initDate && (new Date(initDate)) == 'Invalid Date') {
-        throw 'Data de inicio inválida'
-    }
-
-    if (endDate && (new Date(endDate)) == 'Invalid Date') {
-        throw 'Data de limite inválida'
-    }
-
-    if (justificationId < 0) {
-        throw 'Justificativa inválida.'
-    }
-}
-
 const validateUpdateFields =  (id, date, entryHour, exitHour, justificationId) => {
 
     if (id <= 0) {
@@ -408,4 +431,55 @@ const validateUpdateFields =  (id, date, entryHour, exitHour, justificationId) =
     }
 }
 
-startUp()
+const validateInsertFormFields = (date, entryHour, exitHour, justificationId) => {
+    hideAllErrors()
+    let hasDateErrors = false
+    let hasEntryErrors = false
+    let hasExitErrors = false
+    let hasJustificationErrors = false
+
+    if (date.length <= 0) {
+        showDateErrors(`<br>Favor preencher a data.</br>`)
+        hasDateErrors = true
+    }
+
+    if (entryHour.length <= 0) {
+        showEntryErrors(`<br>Favor preencher a entrada.</br>`)
+        hasEntryErrors = true
+    }
+
+    if (exitHour.length <= 0) {
+        showExitErrors(`<br>Favor preencher a saída.</br>`)
+        hasExitErrors = true
+    }
+
+    if (justificationId <= 0) {
+        showJustificationErrors(`<br>Favor preencher a justificativa.</br>`)
+        hasJustificationErrors = true
+    }
+
+    if (hasDateErrors || hasEntryErrors || hasExitErrors || hasJustificationErrors) {
+
+        if (!hasDateErrors) {
+            hideErrors('date-errors')
+        }
+
+        if (!hasEntryErrors) {
+            hideErrors('entry-errors')
+        }
+
+        if (!hasExitErrors) {
+            hideErrors('exit-errors')
+        }
+
+        if (!hasJustificationErrors) {
+            hideErrors('justification-errors')
+        }
+
+        throw 'Erro no preenchimento de campos'
+    } else {
+        hideAllErrors()
+    }
+}
+
+window.onload = startUp()

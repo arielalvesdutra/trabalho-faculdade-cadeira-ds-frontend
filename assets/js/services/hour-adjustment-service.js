@@ -1,6 +1,6 @@
-import { getUserPayload, getUserToken } from './auth.js'
-import { backendUrl } from './backend.js'
-import handleErrors from './handle-errors.js'
+import { getUserPayload, getUserToken } from '../auth.js'
+import { backendUrl } from '../backend.js'
+import handleErrors from '../handle-errors.js'
 
 export default class HourAdjustmentService {
     constructor() {
