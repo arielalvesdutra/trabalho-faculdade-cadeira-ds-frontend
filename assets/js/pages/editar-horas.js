@@ -1,6 +1,16 @@
 import { getSelectedProfile, getUserPayload, validadeProfileSelection, validateToken } from '../auth.js'
 import HourAdjustmentService from '../services/hour-adjustment-service.js'
 import JustificationService from '../services/justification-service.js'
+import { validateFilterFormFields, validateUpdateFields} from '../validators/editar-horas-validator.js'
+
+let adjustments
+let justific 
+
+let filters = {
+    initDate:  '',
+    endDate: '',
+    justificationId:  0
+}
 
 const buildAdjustmentsListTbody = (hoursAdjustments, justifications) => {
 
@@ -143,6 +153,7 @@ const fillJustificationOptions = (justifications) => {
 
 const filterAdjustmentFormOnSubmit = () => {
     document.filterAdjustmentsForm.onsubmit = async event => {
+
         event.preventDefault()
 
         const form = event.target
@@ -157,7 +168,11 @@ const filterAdjustmentFormOnSubmit = () => {
 
             validateFilterFormFields(initDate, endDate, justificationId)
 
-            let adjustments = await hourAdjustmentService.searchEmployeeAdjustments(initDate, endDate, justificationId)
+            filters.initDate = initDate
+            filters.endData = endDate
+            filters.justificationId = justificationId
+
+            adjustments = await hourAdjustmentService.searchEmployeeAdjustments(initDate, endDate, justificationId)
 
             loadHoursAdjustments(adjustments)
         } catch (exception) {
@@ -202,6 +217,22 @@ const getJustifications = async () => {
     return justifications
 }
 
+const hasFilters = () => {
+    if (filters.initDate)  {
+        return true
+    }
+    
+    if (filters.endDate)  {
+        return true
+    }
+
+    if (filters.justificationId)  {
+        return true
+    }
+
+    return false
+}
+
 const loadHoursAdjustments = async (hoursAdjustments) => {
     try {
 
@@ -209,6 +240,14 @@ const loadHoursAdjustments = async (hoursAdjustments) => {
 
         if (!hoursAdjustments) {
             hoursAdjustments = await getHoursAdjustments()
+        }
+
+        if (hasFilters()) {
+
+            let hourAdjustmentService = new HourAdjustmentService()
+            hoursAdjustments = await hourAdjustmentService.searchEmployeeAdjustments(
+                filters.initDate, filters.endDate, filters.justificationId
+            )
         }
 
         fillAdjustmentsListTable(hoursAdjustments, justifications)
@@ -244,6 +283,10 @@ const setUserNameTitle = userName => {
     profileTitleDiv.innerHTML = "Usuário: " + userName
 }
 
+/**
+ * @todo pode ser refatorado com a componentização campos utilizados,
+ * de forma que seja mais fácil modificar eles
+ */
 const showCurrentEditMode = id => {
     let currentLine = document.querySelector('#tr_' + id) 
     let dateColumn = document.querySelector('#td_date_' + id)
@@ -327,17 +370,21 @@ const startUp = async () => {
     setProfileTitle(selectedProfile.name)
 
     try {
-        let justifications = await getJustifications()
-        fillJustificationOptions(justifications)
+        justific = await getJustifications()
+        fillJustificationOptions(justific)
 
-        let hoursAdjustments = await getHoursAdjustments()
-        fillAdjustmentsListTable(hoursAdjustments, justifications)
+        adjustments = await getHoursAdjustments()
+        fillAdjustmentsListTable(adjustments, justific)
+
+
     } catch(error) {
         fillAdjustmentsListTable(null, null)
     }
 
     deleteAdjustmentOnClick()
     editAdjustmentOnClick()
+
+    
     sendAdjustmentApprovalRequestOnClick()
     filterAdjustmentFormOnSubmit()
 }
@@ -363,44 +410,6 @@ const updateAdjustmentOnClick = () => {
         } catch(error) {
             console.log(error)
         }
-    }
-}
-
-const validateFilterFormFields = (initDate, endDate, justificationId) => {
-
-    if (initDate && (new Date(initDate)) == 'Invalid Date') {
-        throw 'Data de inicio inválida'
-    }
-
-    if (endDate && (new Date(endDate)) == 'Invalid Date') {
-        throw 'Data de limite inválida'
-    }
-
-    if (justificationId < 0) {
-        throw 'Justificativa inválida.'
-    }
-}
-
-const validateUpdateFields =  (id, date, entryHour, exitHour, justificationId) => {
-
-    if (id <= 0) {
-        throw 'preencher o id'
-    }
-
-    if (date.value <= 0) {
-        throw 'preencher a data'
-    }
-
-    if (entryHour.value <= 0) {
-        throw 'preencher a entrada'
-    }
-
-    if (exitHour.value <= 0) {
-        throw 'preencher a saída'
-    }
-
-    if (justificationId <= 0) {
-        throw 'preencher a justificativa'
     }
 }
 
