@@ -455,6 +455,11 @@ const validateInsertFormFields = (date, entryHour, exitHour, justificationId) =>
         hasExitErrors = true
     }
 
+    if (new Date(date + ' ' + entryHour) > new Date(date + ' ' + exitHour)) {
+        showEntryErrors(`<br>A entrada é maior que a saída.</br>`)
+        hasEntryErrors = true
+    }
+
     if (justificationId <= 0) {
         showJustificationErrors(`<br>Favor preencher a justificativa.</br>`)
         hasJustificationErrors = true
