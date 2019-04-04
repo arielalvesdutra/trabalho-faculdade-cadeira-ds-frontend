@@ -1,4 +1,4 @@
-import { getSelectedProfile, getUserPayload, validadeProfileSelection, validateToken } from '../auth.js'
+import { getSelectedProfile, getUserPayload, validateProfileSelection, validateToken } from '../auth.js'
 import HourAdjustmentService from '../services/hour-adjustment-service.js'
 
 const loadUserProfileHoursAdjustments = async () => {
@@ -44,7 +44,7 @@ const setCoordinatorDashboardContainer = () => {
     employeeDashboardContainer.innerHTML =
         '<div class="row mt10 wrap justify-center align-items-center">' +
         '<i class="fas fa-2x fa-exclamation-circle"></i>' +
-        '<h3>Você não possui Ajustes de Horas para assinar!</h3>' +
+        '<h3>Você não possui Ajustes de Horas para analisar!</h3>' +
         '</div>'
 }
 
@@ -74,7 +74,7 @@ const setEmployeeDashboardContainer = employeeAdjustments => {
 
 const startUp = () => {
     validateToken()
-    validadeProfileSelection()
+    validateProfileSelection()
 
     let userPayload = getUserPayload()
     setUserNameTitle(userPayload.name)
