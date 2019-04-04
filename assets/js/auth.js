@@ -48,7 +48,16 @@ const logOut = message => {
     window.location.href = 'index.html'
 }
 
-const validadeProfileSelection = () => {
+const validateEmployeeProfile = () => {
+    let selectedProfile = getSelectedProfile()
+
+    if (selectedProfile.code != 'employee') {
+        alert('Você não tem permissão para acessar esta página.')
+        window.location.href = 'dashboard.html'
+    }
+}
+
+const validateProfileSelection = () => {
     if (!hasUserSelectedProfile()) {
         window.location.href = 'selecionar-perfil.html'
     }
@@ -66,6 +75,7 @@ export {
     getUserToken,
     isLogged,
     logOut,
-    validadeProfileSelection,
+    validateEmployeeProfile,
+    validateProfileSelection,
     validateToken
 }
