@@ -233,24 +233,26 @@ const hasFilters = () => {
     return false
 }
 
-const loadHoursAdjustments = async (hoursAdjustments) => {
+const loadHoursAdjustments = async (hoursAdjustments = null) => {
     try {
 
-        let justifications = await getJustifications()
-
+        justific = await getJustifications()
+        
         if (!hoursAdjustments) {
-            hoursAdjustments = await getHoursAdjustments()
+            // hoursAdjustments = await getHoursAdjustments()
+            adjustments = await getHoursAdjustments()
         }
-
+        
         if (hasFilters()) {
-
+            
             let hourAdjustmentService = new HourAdjustmentService()
-            hoursAdjustments = await hourAdjustmentService.searchEmployeeAdjustments(
-                filters.initDate, filters.endDate, filters.justificationId
+
+            adjustments = await hourAdjustmentService.searchEmployeeAdjustments(
+                    filters.initDate, filters.endDate, filters.justificationId
             )
         }
-
-        fillAdjustmentsListTable(hoursAdjustments, justifications)
+                
+        fillAdjustmentsListTable(adjustments, justific)
 
         deleteAdjustmentOnClick()
         editAdjustmentOnClick()
@@ -373,17 +375,14 @@ const startUp = async () => {
         justific = await getJustifications()
         fillJustificationOptions(justific)
 
-        adjustments = await getHoursAdjustments()
-        fillAdjustmentsListTable(adjustments, justific)
-
+        loadHoursAdjustments()
 
     } catch(error) {
-        fillAdjustmentsListTable(null, null)
-    }
 
+    }
+    
     deleteAdjustmentOnClick()
     editAdjustmentOnClick()
-
     
     sendAdjustmentApprovalRequestOnClick()
     filterAdjustmentFormOnSubmit()
