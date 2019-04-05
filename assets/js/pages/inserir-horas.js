@@ -260,20 +260,6 @@ const getJustifications = async () => {
     return justifications
 }
 
-const hideErrors = (element) => {
-    let errorField = document.querySelector('#' + element)
-    errorField.style.display = 'none'
-    errorField.innerHTML = ''
-}
-
-const hideAllErrors = () => {
-    let errorsFields = document.querySelectorAll('.fields-errors')
-    for (let errorField of errorsFields) {
-        errorField.style.display = 'none'
-        errorField.innerHTML = ''
-    }
-}
-
 const insertAdjustmentFormOnSubmit = () => {
     document.insertAdjustmentForm.onsubmit = async event => {
         event.preventDefault()
@@ -317,7 +303,6 @@ const loadHoursAdjustments = async () => {
     }
 }
 
-
 const loadJustifications  = async () => {
     try {
         justifica = await getJustifications()
@@ -350,12 +335,6 @@ const setProfileTitle = profileTitle => {
 const setUserNameTitle = userName => {
     const profileTitleDiv = document.getElementById('user-name-title')
     profileTitleDiv.innerHTML = "Usuário: " + userName
-}
-
-const showJustificationErrors = message => {
-    let justificationErrorsDiv = document.querySelector('#justification-errors')
-    justificationErrorsDiv.style.display = 'block'
-    justificationErrorsDiv.innerHTML = message
 }
 
 const startUp = async () => {
