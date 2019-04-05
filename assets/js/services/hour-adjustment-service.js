@@ -6,7 +6,7 @@ export default class HourAdjustmentService {
     constructor() {
     }
 
-    deleteHourAdjustment = async (id) => {
+    async deleteHourAdjustment(id) {
         const userToken = getUserToken()
         let headers = new Headers()
 
@@ -25,9 +25,9 @@ export default class HourAdjustmentService {
             .catch(error => {
 
             })
-    }
+    };
 
-    getEmployeeAdjustments = async () => {
+    async getEmployeeAdjustments() {
 
         const userPayload = getUserPayload()
         const userToken = getUserToken()
@@ -53,9 +53,9 @@ export default class HourAdjustmentService {
 
         return employeeAdjustments
 
-    }
+    };
 
-    getEmployeeAdjusmentsStatus = async () => {
+    async getEmployeeAdjusmentsStatus() {
         const userPayload = getUserPayload()
         const userToken = getUserToken()
         let headers = new Headers()
@@ -79,9 +79,9 @@ export default class HourAdjustmentService {
             })
 
         return employeeAdjustments
-    }
+    };
 
-    insertHourAdjustment = async (date, entryHour, exitHour, justificationId) => {
+    async insertHourAdjustment(date, entryHour, exitHour, justificationId) {
         const userPayload = getUserPayload()
         const userToken = getUserToken()
         let headers = new Headers()
@@ -110,9 +110,9 @@ export default class HourAdjustmentService {
             .catch(error => {
 
             })
-    }
+    };
 
-    searchEmployeeAdjustments = async (initDate, endDate, justificationId) => {
+    async searchEmployeeAdjustments(initDate, endDate, justificationId) {
         const userPayload = getUserPayload()
         const userToken = getUserToken()
         let headers = new Headers()
@@ -159,9 +159,9 @@ export default class HourAdjustmentService {
             })
 
         return employeeAdjustments
-    }
+    };
 
-    sendAdjustmentApprovalRequest = async () => {
+    async sendAdjustmentApprovalRequest() {
         const userToken = getUserToken()
         let headers = new Headers()
 
@@ -181,9 +181,9 @@ export default class HourAdjustmentService {
             .catch(error => {
 
             })
-    }
+    };
 
-    updateHourAdjustment = async (id, date, entryHour, exitHour, justificationId) => {
+    async updateHourAdjustment(id, date, entryHour, exitHour, justificationId) {
         const userToken = getUserToken()
         let headers = new Headers()
 
@@ -211,5 +211,5 @@ export default class HourAdjustmentService {
             .catch(error => {
 
             })
-    }
+    };
 }

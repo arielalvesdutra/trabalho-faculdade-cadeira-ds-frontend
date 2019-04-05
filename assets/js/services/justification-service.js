@@ -6,7 +6,7 @@ export default class JustificationService {
     constructor() {
     }
 
-    getJustifications = async () => {
+    async getJustifications() {
 
         const userToken = getUserToken()
         let headers = new Headers()
@@ -29,5 +29,5 @@ export default class JustificationService {
             })
 
         return justifications
-    }
+    };
 }
