@@ -3,6 +3,12 @@ import { getSelectedProfile, getUserPayload, validateEmployeeProfile,
     validateProfileSelection, validateToken } from '../auth.js'
 import HourAdjustmentService from '../services/hour-adjustment-service.js'
 import JustificationService from '../services/justification-service.js'
+import { createColumn } from '../pages-components.js'
+
+
+let adjus
+
+let justifica
 
 const buildAdjustmentsListTbody = (hoursAdjustments, justifications) => {
 
@@ -112,7 +118,7 @@ const editAdjustmentOnClick = () => {
     let editButtons = document.getElementsByClassName('edit-button')
     for (let editButton of editButtons) {
         editButton.onclick = async () => {
-                        
+                       
             cancelPreviusEditMode()
             showCurrentEditMode(editButton.value)
             cancelAdjustmentEditOnClick()
@@ -121,76 +127,79 @@ const editAdjustmentOnClick = () => {
     }
 }
 
-const showCurrentEditMode = id => {
-    let currentLine = document.querySelector('#tr_' + id) 
-    let dateColumn = document.querySelector('#td_date_' + id)
-    let entryColumn = document.querySelector('#td_entry_' + id)
-    let exitColumn = document.querySelector('#td_exit_' + id)
-    let durationColumn = document.querySelector('#td_duration_' + id)
-    let justificationColumn = document.querySelector('#td_justification_' + id)
-    let actionsColumn = document.querySelector('#td_actions_' + id)
+const getAdjustmentById = id => {
+    let selectedAdjustment 
+    
+    adjus.forEach(adjustment => {
+        if (adjustment.id == id) {
 
-    dateColumn.setAttribute('hidden', 'hidden')
-    entryColumn.setAttribute('hidden', 'hidden')
-    exitColumn.setAttribute('hidden', 'hidden')
-    durationColumn.setAttribute('hidden', 'hidden')
-    justificationColumn.setAttribute('hidden', 'hidden')
-    justificationColumn.setAttribute('hidden', 'hidden')
-    actionsColumn.setAttribute('hidden', 'hidden')
+            selectedAdjustment = adjustment
+        }
+    })
+    
+    return selectedAdjustment
+}
+
+const showCurrentEditMode = id => {
+
+    let currentAdjustment = getAdjustmentById(id)
+
+    let currentLine = document.querySelector('#tr_' + id) 
+
+    document.querySelector('#td_date_' + id).setAttribute('hidden', 'hidden')
+    document.querySelector('#td_entry_' + id).setAttribute('hidden', 'hidden')
+    document.querySelector('#td_exit_' + id).setAttribute('hidden', 'hidden')
+    document.querySelector('#td_duration_' + id).setAttribute('hidden', 'hidden')
+    document.querySelector('#td_duration_' + id).setAttribute('hidden', 'hidden')
+    document.querySelector('#td_justification_' + id).setAttribute('hidden', 'hidden')
+    document.querySelector('#td_actions_' + id).setAttribute('hidden', 'hidden')
 
     currentLine.setAttribute('edit-mode', 1)
 
-    let editDateColumn = document.createElement('td')
-    let editEntryColumn = document.createElement('td')
-    let editExitColumn = document.createElement('td')
-    let editDurationColumn = document.createElement('td')
-    let editJustificationColumn = document.createElement('td')
-    let editActionsColumn = document.createElement('td')
+    let editDateColumnZ = createColumn('', '', [ ['edit-culumn', 1 ] ],
+        `<input type="date" class="admin-date-input" id="edit-date-input" 
+        value="${currentAdjustment.date}"/>`
+    )
 
-    editDateColumn.innerHTML = 
-            `<input type="date" class="admin-date-input" id="edit-date-input" 
-                value="${dateColumn.innerHTML}"/>`
+    let editEntryColumnZ = createColumn('', '', [ ['edit-culumn', 1] ],
+        `<input type="time" value="${currentAdjustment.entryHour}" id="edit-entry-input"
+        class="admin-time-input">`
+    )
 
-    editEntryColumn.innerHTML =
-            `<input type="time" value="${entryColumn.innerHTML}" id="edit-entry-input"
-                class="admin-time-input">`
+    let editExitColumnZ = createColumn('', '', [ ['edit-culumn', 1 ] ],
+        `<input type="time" value="${currentAdjustment.exitHour}" id="edit-exit-input"
+        class="admin-time-input">`
+    )
 
-    editExitColumn.innerHTML =
-            `<input type="time" value="${exitColumn.innerHTML}" id="edit-exit-input"
-                class="admin-time-input">`
+    let editDurationColumnZ = createColumn('', '', [ ['edit-culumn', 1 ] ], ``)
+
+    let editActionsColumnZ = createColumn('', '', [ ['edit-culumn', 1 ] ], 
+        `<button id="updateButton" value="${id}"
+                class="update-button" title="Confirmar edição do ajuste">
+            <i class="far fa fa-check"></i>
+        </button>
+            <button id="cancelButton"
+                class="cancel-button" title="Cancelar edição do ajuste">
+            <i class="far fa fa-ban"></i>
+        </button>`
+    )
 
     let options =  Object.values(document.querySelector('#justification-options').childNodes)
 
     let allOptions = options.reduce((allOptions, option) => allOptions + option.outerHTML , '')
 
-    editJustificationColumn.innerHTML = 
-            `<select id="edit-justification-select" class="admin-input">
-                ${allOptions}
-            </select>`
+    let editJustificationColumn = createColumn('', '', [ ['edit-culumn', 1 ] ], 
+        `<select id="edit-justification-select" class="admin-input">
+            ${allOptions}
+        </select>`
+    )
 
-    editActionsColumn.innerHTML = 
-            `<button id="updateButton" value="${id}"
-                    class="update-button" title="Confirmar edição do ajuste">
-                <i class="far fa fa-check"></i>
-            </button>
-             <button id="cancelButton"
-                    class="cancel-button" title="Cancelar edição do ajuste">
-                <i class="far fa fa-ban"></i>
-            </button>`
-
-    editDateColumn.setAttribute('edit-culumn', 1)
-    editEntryColumn.setAttribute('edit-culumn', 1)
-    editExitColumn.setAttribute('edit-culumn', 1)
-    editDurationColumn.setAttribute('edit-culumn', 1)
-    editJustificationColumn.setAttribute('edit-culumn', 1)
-    editActionsColumn.setAttribute('edit-culumn', 1)
-
-    currentLine.appendChild(editDateColumn)
-    currentLine.appendChild(editEntryColumn)
-    currentLine.appendChild(editExitColumn)
-    currentLine.appendChild(editDurationColumn)
+    currentLine.appendChild(editDateColumnZ)
+    currentLine.appendChild(editEntryColumnZ)
+    currentLine.appendChild(editExitColumnZ)
+    currentLine.appendChild(editDurationColumnZ)
     currentLine.appendChild(editJustificationColumn)
-    currentLine.appendChild(editActionsColumn)
+    currentLine.appendChild(editActionsColumnZ)
 }
 
 const fillAdjustmentsListTable = (hoursAdjustments, justifications) => {
@@ -296,15 +305,27 @@ const loadHoursAdjustments = async () => {
     try {
 
         let justifications = await getJustifications()
-        let hoursAdjustments = await getHoursAdjustments()
+        adjus = await getHoursAdjustments()
 
-        fillAdjustmentsListTable(hoursAdjustments, justifications)
+        fillAdjustmentsListTable(adjus, justifications)
 
         deleteAdjustmentOnClick()
         editAdjustmentOnClick()
 
     } catch (error) {
         fillAdjustmentsListTable(null, null)
+    }
+}
+
+
+const loadJustifications  = async () => {
+    try {
+        justifica = await getJustifications()
+        
+        fillJustificationOptions(justifica)
+
+    } catch (error) {
+
     }
 }
 
@@ -371,11 +392,12 @@ const startUp = async () => {
     setProfileTitle(selectedProfile.name)
 
     try {
-        let justifications = await getJustifications()
-        fillJustificationOptions(justifications)
+        // let justifications = await getJustifications()
+        // fillJustificationOptions(justifications)
 
-        let hoursAdjustments = await getHoursAdjustments()
-        fillAdjustmentsListTable(hoursAdjustments, justifications)
+        loadJustifications()
+
+        loadHoursAdjustments()
     } catch (error) {
         fillAdjustmentsListTable(null, null)
     }
