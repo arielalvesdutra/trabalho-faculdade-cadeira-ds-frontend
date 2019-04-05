@@ -3,7 +3,8 @@ import { getSelectedProfile, getUserPayload,
     validateToken } from '../auth.js'
 import HourAdjustmentService from '../services/hour-adjustment-service.js'
 import JustificationService from '../services/justification-service.js'
-import { validateFilterFormFields, validateUpdateFields} from '../validators/editar-horas-validator.js'
+import { validateFilterFormFields } from '../validators/editar-horas-validator.js'
+import { appendElements, createColumn, hideChildELements } from '../pages-components.js'
 
 let adjustments
 let justific 
@@ -241,7 +242,6 @@ const loadHoursAdjustments = async (hoursAdjustments = null) => {
         justific = await getJustifications()
         
         if (!hoursAdjustments) {
-            // hoursAdjustments = await getHoursAdjustments()
             adjustments = await getHoursAdjustments()
         }
         
@@ -287,80 +287,79 @@ const setUserNameTitle = userName => {
     profileTitleDiv.innerHTML = "Usuário: " + userName
 }
 
-/**
- * @todo pode ser refatorado com a componentização campos utilizados,
- * de forma que seja mais fácil modificar eles
- */
+const getAdjustmentById = id => {
+    let selectedAdjustment 
+    
+    adjustments.forEach(adjustment => {
+        if (adjustment.id == id) {
+
+            selectedAdjustment = adjustment
+        }
+    })
+    
+    return selectedAdjustment
+}
+
 const showCurrentEditMode = id => {
+
+    let currentAdjustment = getAdjustmentById(id)
+
     let currentLine = document.querySelector('#tr_' + id) 
-    let dateColumn = document.querySelector('#td_date_' + id)
-    let entryColumn = document.querySelector('#td_entry_' + id)
-    let exitColumn = document.querySelector('#td_exit_' + id)
-    let durationColumn = document.querySelector('#td_duration_' + id)
-    let justificationColumn = document.querySelector('#td_justification_' + id)
-    let actionsColumn = document.querySelector('#td_actions_' + id)
-
-    dateColumn.setAttribute('hidden', 'hidden')
-    entryColumn.setAttribute('hidden', 'hidden')
-    exitColumn.setAttribute('hidden', 'hidden')
-    durationColumn.setAttribute('hidden', 'hidden')
-    justificationColumn.setAttribute('hidden', 'hidden')
-    justificationColumn.setAttribute('hidden', 'hidden')
-    actionsColumn.setAttribute('hidden', 'hidden')
-
     currentLine.setAttribute('edit-mode', 1)
 
-    let editDateColumn = document.createElement('td')
-    let editEntryColumn = document.createElement('td')
-    let editExitColumn = document.createElement('td')
-    let editDurationColumn = document.createElement('td')
-    let editJustificationColumn = document.createElement('td')
-    let editActionsColumn = document.createElement('td')
+    hideChildELements(currentLine)
 
-    editDateColumn.innerHTML = 
-            `<input type="date" class="admin-date-input" id="edit-date-input" 
-                value="${dateColumn.innerHTML}"/>`
+    let editDateColumn = createColumn('', '', [ ['edit-culumn', 1 ] ],
+        `<input type="date" class="admin-date-input" id="edit-date-input" 
+        value="${currentAdjustment.date}"/>
+        <span id="edit-date-error" edit-errors class="fields-errors"></span>`
+    )
 
-    editEntryColumn.innerHTML =
-            `<input type="time" value="${entryColumn.innerHTML}" id="edit-entry-input"
-                class="admin-time-input">`
+    let editEntryColumn = createColumn('', '', [ ['edit-culumn', 1] ],
+        `<input type="time" value="${currentAdjustment.entryHour}" id="edit-entry-input"
+        class="admin-time-input">
+        <span id="edit-entry-error" edit-errors class="fields-errors"></span>`
+    )
 
-    editExitColumn.innerHTML =
-            `<input type="time" value="${exitColumn.innerHTML}" id="edit-exit-input"
-                class="admin-time-input">`
+    let editExitColumn = createColumn('', '', [ ['edit-culumn', 1 ] ],
+        `<input type="time" value="${currentAdjustment.exitHour}" id="edit-exit-input"
+        class="admin-time-input">
+        <span id="edit-exit-error" edit-errors class="fields-errors"></span>`
+    )
 
-    let options =  Object.values(document.querySelector('#justification-options').childNodes)
+    let editDurationColumn = createColumn('', '', [ ['edit-culumn', 1 ] ], ``)
 
+    
+    let options = Object.values(document.querySelector('#justification-options').childNodes)
+    
     let allOptions = options.reduce((allOptions, option) => allOptions + option.outerHTML , '')
+    
+    let editJustificationColumn = createColumn('', '', [ ['edit-culumn', 1 ] ], 
+        `<select id="edit-justification-select" class="admin-input">
+            ${allOptions}
+        </select>
+        <span id="edit-justification-error" edit-errors class="fields-errors"></span>`
+    )
 
-    editJustificationColumn.innerHTML = 
-            `<select id="edit-justification-select" class="admin-input">
-                ${allOptions}
-            </select>`
-
-    editActionsColumn.innerHTML = 
-            `<button id="updateButton" value="${id}"
-                    class="update-button" title="Confirmar edição do ajuste">
-                <i class="far fa fa-check"></i>
-            </button>
-             <button id="cancelButton"
-                    class="cancel-button" title="Cancelar edição do ajuste">
-                <i class="far fa fa-ban"></i>
-            </button>`
-
-    editDateColumn.setAttribute('edit-culumn', 1)
-    editEntryColumn.setAttribute('edit-culumn', 1)
-    editExitColumn.setAttribute('edit-culumn', 1)
-    editDurationColumn.setAttribute('edit-culumn', 1)
-    editJustificationColumn.setAttribute('edit-culumn', 1)
-    editActionsColumn.setAttribute('edit-culumn', 1)
-
-    currentLine.appendChild(editDateColumn)
-    currentLine.appendChild(editEntryColumn)
-    currentLine.appendChild(editExitColumn)
-    currentLine.appendChild(editDurationColumn)
-    currentLine.appendChild(editJustificationColumn)
-    currentLine.appendChild(editActionsColumn)
+    let editActionsColumn = createColumn('', '', [ ['edit-culumn', 1 ] ], 
+        `<button id="updateButton" value="${id}"
+                class="update-button" title="Confirmar edição do ajuste">
+            <i class="far fa fa-check"></i>
+        </button>
+            <button id="cancelButton"
+                class="cancel-button" title="Cancelar edição do ajuste">
+            <i class="far fa fa-ban"></i>
+        </button>`
+    )
+    
+    appendElements(currentLine, [
+        editDateColumn,
+        editEntryColumn,
+        editExitColumn,
+        editDurationColumn,
+        editJustificationColumn,
+        editActionsColumn
+    ])
 }
 
 const startUp = async () => {
@@ -390,6 +389,11 @@ const startUp = async () => {
     sendAdjustmentApprovalRequestOnClick()
     filterAdjustmentFormOnSubmit()
 }
+const showError = (fieldId, errorMessages) => {
+    let errorField = document.querySelector('#' + fieldId)
+
+    errorField.innerHTML = errorMessages
+}
 
 const updateAdjustmentOnClick = () => {
     let updateButton =  document.querySelector('#updateButton')
@@ -412,6 +416,58 @@ const updateAdjustmentOnClick = () => {
         } catch(error) {
             console.log(error)
         }
+    }
+}
+
+
+const validateUpdateFields =  (id, date, entryHour, exitHour, justificationId) => {
+
+    let hasErrors = false
+    let dateErrorMessage = ''
+    let entryErrorMessage = ''
+    let exitErrorMessage = ''
+    let justificationErrorMessage = ''
+
+    if (id <= 0) {
+        hasErrors = true
+    }
+    
+    if (!date) {
+        
+        dateErrorMessage = "<br>Favor preencher a data."
+        hasErrors = true
+    }
+
+    if (!entryHour) {
+        entryErrorMessage ="<br>Favor preencher a entrada."
+        hasErrors = true
+    }
+    
+    if (!exitHour) {
+        exitErrorMessage = "<br>Favor preencher a saída."
+        hasErrors = true
+    }
+    
+    if (new Date(date + ' ' + entryHour) > new Date(date + ' ' + exitHour) &&
+        exitHour
+    ) {
+        entryErrorMessage = "<br>A data de entrada é maior que date de saída."
+        
+        hasErrors = true
+    }
+    
+    if (justificationId <= 0) {
+        justificationErrorMessage = "<br>Favor preencher a justificativa."
+        hasErrors = true
+    }
+    
+    showError('edit-date-error', dateErrorMessage )
+    showError('edit-entry-error', entryErrorMessage)
+    showError('edit-exit-error', exitErrorMessage)
+    showError('edit-justification-error', justificationErrorMessage)
+
+    if (hasErrors) {
+        throw 'Erro de preenchimento de campos'
     }
 }
 
