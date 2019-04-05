@@ -296,7 +296,7 @@ const insertAdjustmentFormOnSubmit = () => {
 
             loadHoursAdjustments()
         } catch (exception) {
-
+            console.log(exception)
         }
     }
 }
@@ -350,28 +350,6 @@ const setProfileTitle = profileTitle => {
 const setUserNameTitle = userName => {
     const profileTitleDiv = document.getElementById('user-name-title')
     profileTitleDiv.innerHTML = "Usuário: " + userName
-}
-
-const showDateErrors = message => {
-    let dateErrorsDiv = document.querySelector('#date-errors')
-    dateErrorsDiv.style.display = 'block'
-
-    let error = document.createElement('DIV')
-    error.innerHTML = message
-
-    dateErrorsDiv.appendChild(error)
-}
-
-const showEntryErrors = message => {
-    let entryErrorsDiv = document.querySelector('#entry-errors')
-    entryErrorsDiv.style.display = 'block'
-    entryErrorsDiv.innerHTML = message
-}
-
-const showExitErrors = message => {
-    let extiErrorsDiv = document.querySelector('#exit-errors')
-    extiErrorsDiv.style.display = 'block'
-    extiErrorsDiv.innerHTML = message
 }
 
 const showJustificationErrors = message => {
@@ -488,58 +466,45 @@ const validateUpdateFields =  (id, date, entryHour, exitHour, justificationId) =
 }
 
 const validateInsertFormFields = (date, entryHour, exitHour, justificationId) => {
-    hideAllErrors()
-    let hasDateErrors = false
-    let hasEntryErrors = false
-    let hasExitErrors = false
-    let hasJustificationErrors = false
+
+    let hasErrors = false
+    let dateErrorMessage = ''
+    let entryErrorMessage = ''
+    let exitErrorMessage = ''
+    let justificationErrorMessage =''
 
     if (date.length <= 0) {
-        showDateErrors(`<br>Favor preencher a data.</br>`)
-        hasDateErrors = true
+        dateErrorMessage = `<br>Favor preencher a data.</br>`
+        hasErrors = true
     }
 
     if (entryHour.length <= 0) {
-        showEntryErrors(`<br>Favor preencher a entrada.</br>`)
-        hasEntryErrors = true
+        entryErrorMessage = `<br>Favor preencher a entrada.</br>`
+        hasErrors = true
     }
 
     if (exitHour.length <= 0) {
-        showExitErrors(`<br>Favor preencher a saída.</br>`)
-        hasExitErrors = true
+        exitErrorMessage = `<br>Favor preencher a saída.</br>`
+        hasErrors = true
     }
 
     if (new Date(date + ' ' + entryHour) > new Date(date + ' ' + exitHour)) {
-        showEntryErrors(`<br>A entrada é maior que a saída.</br>`)
-        hasEntryErrors = true
+        entryErrorMessage = `<br>A entrada é maior que a saída.</br>`
+        hasErrors = true
     }
 
     if (justificationId <= 0) {
-        showJustificationErrors(`<br>Favor preencher a justificativa.</br>`)
-        hasJustificationErrors = true
+        justificationErrorMessage = `<br>Favor preencher a justificativa.</br>`
+        hasErrors = true
     }
 
-    if (hasDateErrors || hasEntryErrors || hasExitErrors || hasJustificationErrors) {
+    showError('date-errors', dateErrorMessage)
+    showError('entry-errors', entryErrorMessage)
+    showError('exit-errors', exitErrorMessage)
+    showError('justification-errors', justificationErrorMessage)
 
-        if (!hasDateErrors) {
-            hideErrors('date-errors')
-        }
-
-        if (!hasEntryErrors) {
-            hideErrors('entry-errors')
-        }
-
-        if (!hasExitErrors) {
-            hideErrors('exit-errors')
-        }
-
-        if (!hasJustificationErrors) {
-            hideErrors('justification-errors')
-        }
-
-        throw 'Erro no preenchimento de campos'
-    } else {
-        hideAllErrors()
+    if (hasErrors) {
+        throw 'Erro de preenchimento de campos.'
     }
 }
 
