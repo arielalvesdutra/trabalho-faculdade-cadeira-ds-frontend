@@ -1,4 +1,17 @@
 /**
+ * @param {*} intendedElement 
+ * @param {*} elements 
+ */
+const appendElements = (intendedElement, elements = []) => {
+
+    if (intendedElement && elements) {
+        for (let element of elements) {
+            intendedElement.appendChild(element)
+        }
+    }
+}
+
+/**
  * @param {*} id 
  * @param {*} classNames 
  * @param {*} atributes 
@@ -30,4 +43,18 @@ const createColumn = (id, classNames = [], atributes = [], content) => {
     return column
 }
 
-export { createColumn } 
+/**
+ * @param {*} rootElement 
+ */
+const hideChildELements = rootElement => {
+    let childElements = rootElement.children
+
+    if (childElements) {
+
+        for (let childElement of childElements) {
+            childElement.setAttribute('hidden', 'hidden')
+        }
+    }
+}
+
+export { appendElements, createColumn, hideChildELements } 
