@@ -172,10 +172,8 @@ const filterAdjustmentFormOnSubmit = () => {
             validateFilterFormFields(initDate, endDate, justificationId)
 
             filters.initDate = initDate
-            filters.endData = endDate
+            filters.endDate = endDate
             filters.justificationId = justificationId
-
-            adjustments = await hourAdjustmentService.searchEmployeeAdjustments(initDate, endDate, justificationId)
 
             loadHoursAdjustments(adjustments)
         } catch (exception) {
